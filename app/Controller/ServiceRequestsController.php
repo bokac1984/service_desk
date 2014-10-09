@@ -25,7 +25,13 @@ class ServiceRequestsController extends AppController {
      */
     public function index() {
         $this->ServiceRequest->recursive = 1;
-        $this->set('serviceRequests', $this->Paginator->paginate(array('user_id' => $this->Auth->user('id'))));
+        if ($this->groupId == 2) {
+            $this->set('serviceRequests', $this->Paginator->paginate(array('user_id' => $this->Auth->user('id'))));
+        } else if ($this->groupId == 3) {
+            $this->set('serviceRequests', $this->Paginator->paginate(array('assigned_to' => $this->Auth->user('id'))));
+        } else {
+            $this->set('serviceRequests', $this->Paginator->paginate());
+        }
     }
 
     /**
@@ -79,7 +85,6 @@ class ServiceRequestsController extends AppController {
                 $this->request->data['ServiceRequest']['status_id'] = $statusObj['Status']['id'];
                 $this->request->data['ServiceRequest']['user_id'] = $this->Session->read('Auth.User.id');
                 $this->request->data['ServiceRequest']['assigned_to'] = $this->ServiceRequest->assignedTo($this->request->data['ServiceRequest']['parent_category']);
-                //unset($this->request->data['ServiceRequest']['parent_category']);
 
                 debug($this->request->data);//exit();
 
@@ -88,7 +93,7 @@ class ServiceRequestsController extends AppController {
                     $this->Session->setFlash(__('The service request has been saved.'));
                     return $this->redirect(array('action' => 'index'));
                 } else {
-                    debug($this->ServiceRequest->validationErrors);
+                    //debug($this->ServiceRequest->validationErrors);
                     if ($this->request->data[$this->ServiceRequest->name]['parent_category']) {
                         $children = $this->ServiceRequest->Category->find('list', array(
                             'conditions' => array(
@@ -108,7 +113,7 @@ class ServiceRequestsController extends AppController {
                 }
             }
             else {
-                                    if ($this->request->data[$this->ServiceRequest->name]['parent_category']) {
+                    if ($this->request->data[$this->ServiceRequest->name]['parent_category']) {
                         $children = $this->ServiceRequest->Category->find('list', array(
                             'conditions' => array(
                                 'Category.parent_id' => $this->request->data[$this->ServiceRequest->name]['parent_category']

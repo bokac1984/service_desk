@@ -9,6 +9,7 @@ App::uses('AppModel', 'Model');
  * @property User $User
  * @property Category $Category
  * @property Priority $Priority
+ * @property ServiceRequestH $ServiceRequestH
  */
 class ServiceRequest extends AppModel {
 
@@ -96,7 +97,20 @@ class ServiceRequest extends AppModel {
             'order' => ''
         )
     );
+    
+    public $hasMany = array(
+        'ServiceRequestsH' => array(
+            'className' => 'ServiceRequestsH',
+            'foreignKey' => 'service_request_id',
+        ),
+    );
 
+    /**
+     * Nadji id korisnika kojem ce se dodijeliti tiket na osnovu id kategorije
+     * 
+     * @param int $categoryId
+     * @return int
+     */
     public function assignedTo($categoryId = null) {
         if ($categoryId != null) {
             $options = array(
@@ -106,6 +120,7 @@ class ServiceRequest extends AppModel {
                 'fields' => 'user_id',
                 'recursive' => -1
             );
+            
             $assignedTo = $this->Category->Solver->find('first', $options);
             if (empty($assignedTo)) {
                 return 1;
@@ -151,5 +166,25 @@ class ServiceRequest extends AppModel {
         }
         
         return parent::beforeSave($options);
+    }
+    
+    /**
+     * Sacuvati ovdje istoriju, trebalo bi dohvatiti podatke za trenutni sadrzaj i sacuvati ih,
+     * mozda bi bilo bolje to uraditi trigerom na bazi
+     * 
+     * @param type $created
+     * @param type $options
+     * @return type
+     */
+    public function afterSave($created, $options = array()) {   
+        $original = $this->find('first', array(
+            'conditions' => array(
+                'ServiceRequest.id' => $this->id
+            )
+        ));
+        $historyData['ServiceRequestsH'] = array(
+            ''
+        );
+        return parent::afterSave($created, $options);
     }
 }

@@ -272,6 +272,7 @@
         echo $this->Html->script('/js/lib/bootstrap.min');
         echo $this->Html->script('/js/plugins/metisMenu/metisMenu.min');
         echo $this->Html->script('sb-admin-2');
+        echo $this->Html->script('scripts');
         echo $this->fetch('scriptBottom');
     ?>
 

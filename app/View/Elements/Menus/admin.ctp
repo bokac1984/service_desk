@@ -27,13 +27,13 @@
         <!-- /.nav-second-level -->
     </li>
     <li>
-        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Korisnici<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
-                <a href="flot.html">Flot Charts</a>
+                <?php echo $this->Link->cLink('Novi', array('controller' => 'service_requests', 'action' => 'add'), 'fa fa-table fa-fw'); ?>
             </li>
             <li>
-                <a href="morris.html">Morris.js Charts</a>
+                <?php echo $this->Link->cLink('Lista', array('controller' => 'service_requests', 'action' => 'index'), 'fa fa-table fa-fw'); ?>
             </li>
         </ul>
         <!-- /.nav-second-level -->

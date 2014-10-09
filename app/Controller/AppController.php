@@ -22,6 +22,8 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+    
+    protected $groupId = null;
 
     public $components = array(
         'Acl',
@@ -52,16 +54,14 @@ class AppController extends Controller {
         $this->Auth->authError = __('Nije dozvoljena ta stranica');
         $this->Auth->loginError = __('Pogresno korisnicko ime ili lozinka');
         
-        //$this->layout = 'admin';
-        
         if ($this->Auth->user()) {
-            $group = $this->Auth->user('group_id');
-            switch($group) {
+            $this->groupId = $this->Auth->user('group_id');
+            switch($this->groupId) {
                 case 1:
                     $this->layout = 'admin';
                     break;
                 case 3:
-                    $this->layout = 'operator';
+                    $this->layout = 'admin';
                     break;
                 default:
                     $this->layout = 'default';
@@ -70,6 +70,8 @@ class AppController extends Controller {
         } else {
             $this->layout = 'signin';
         }
+        
+        $this->set('groupId', $this->groupId);
     }
 
 }
