@@ -180,11 +180,27 @@ class ServiceRequest extends AppModel {
         $original = $this->find('first', array(
             'conditions' => array(
                 'ServiceRequest.id' => $this->id
-            )
+            ),
+            'recursive' => -1,
         ));
+        
+        App::uses('CakeSession', 'Model/Datasource');
+        $Session = new CakeSession();
+        
+        //die($Session->read('Auth.User.id'));
         $historyData['ServiceRequestsH'] = array(
-            ''
+            'service_request_id' => $this->id,
+            'status_h' => $original['ServiceRequest']['status_id'],
+            'assigned_to' => $original['ServiceRequest']['assigned_to'],
+            'kategorija' => $original['ServiceRequest']['category_id'],
+            'prioritet' => $original['ServiceRequest']['priority_id'],
+            'naziv' => $original['ServiceRequest']['naziv_zahtjeva'],
+            'opis' => $original['ServiceRequest']['opis_zahtjeva'],
+            'user_id' => $Session->read('Auth.User.id'),
+            'ip' => ''
         );
+        debug($historyData);
+        $this->ServiceRequestsH->save($historyData);
         return parent::afterSave($created, $options);
     }
 }

@@ -58,4 +58,21 @@ class ServiceRequestsH extends AppModel {
             'order' => ''
         )
     );
+    
+    public function beforeSave($options = array()) {
+        $seq = $this->find('first', array(
+            'conditions' => array(
+                'ServiceRequestsH.service_request_id' => $this->data['ServiceRequestsH']['service_request_id']
+            ),
+        ));
+        debug($seq);exit();
+        if (!empty($seq)) {
+            $sekvenca = (int)$seq['ServiceRequestsH']['sekvenca'];
+            $this->data['ServiceRequestsH']['sekvenca'] = $sekvenca++;
+        } else {
+            $this->data['ServiceRequestsH']['sekvenca'] = 1;
+        }
+        
+        return parent::beforeSave($options);
+    }
 }
