@@ -30,10 +30,10 @@
         <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Korisnici<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
-                <?php echo $this->Link->cLink('Novi', array('controller' => 'service_requests', 'action' => 'add'), 'fa fa-table fa-fw'); ?>
+                <?php echo $this->Link->cLink('Novi', array('prefix' => null, 'plugin' => null, 'controller' => 'users', 'action' => 'add'), 'fa fa-table fa-fw'); ?>
             </li>
             <li>
-                <?php echo $this->Link->cLink('Lista', array('controller' => 'service_requests', 'action' => 'index'), 'fa fa-table fa-fw'); ?>
+                <?php echo $this->Link->cLink('Lista', array('prefix' => null, 'plugin' => null, 'controller' => 'users', 'action' => 'index'), 'fa fa-table fa-fw'); ?>
             </li>
         </ul>
         <!-- /.nav-second-level -->

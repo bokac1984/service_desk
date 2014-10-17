@@ -1,0 +1,137 @@
+  public String PrviUpit() throws SQLException, ParseException, Exception {
+    ProcedurePrijemPaketa proc = new ProcedurePrijemPaketa();
+    DCBindingContainer bc = getDCBindingContainer();
+
+    FacesCtrlAttrsBinding VpkSifraAttr =
+      (FacesCtrlAttrsBinding)bc.getControlBinding("VpkSifra");
+    FacesCtrlAttrsBinding BrojAttr =
+      (FacesCtrlAttrsBinding)bc.getControlBinding("Broj");
+
+
+    pBroj = (String)BrojAttr.getInputValue();
+    pVpkSifra = (String)VpkSifraAttr.getInputValue();
+
+
+    BindingContainer bindings = getBindings();
+    OperationBinding operationBinding =
+      bindings.getOperationBinding("Execute");
+    Object result = operationBinding.execute();
+    if (!operationBinding.getErrors().isEmpty()) {
+      return null;
+    }
+
+    myApplicationModuleImpl am =
+      (myApplicationModuleImpl)Utils.getApplicationModuleForDataControl("PrijemPaketaDataControl");
+
+    RowIterator iter = getNode("Paketi1");
+    if (iter.getFetchedRowCount() > 0) {
+      Row r = iter.getCurrentRow();
+      vpkS = (String)r.getAttribute("VpkSifra");
+      brO = (String)r.getAttribute("Broj");
+      status = (String)r.getAttribute("Trenutnistatus");
+      pVpkSifra2 = (String)r.getAttribute("PktVpkSifra");
+      pBroj2 = (String)r.getAttribute("PktBroj");
+      orgJed = new BigDecimal(r.getAttribute("OrgjSifraZa").toString());
+ //     System.out.println(orgJed);
+    }
+
+    orgUser = WSManager.getInstance().getSecPckWS().vratiOrgJed(username);
+    Boolean paketDN =
+      ((String)am.callStoredFunction(Types.VARCHAR, "sif_admin.util_pck.Boolean2D_N(new_doc_admin.paketi_read_pck.PostojiPaket(?,?))",
+                                     new Object[] { pVpkSifra,
+                                                    pBroj })).equals("D");
+
+
+    try {
+   //   System.out.println(pBrojProvjera);
+   //   System.out.println(pBroj);
+      if (!pBroj.equals(pBrojProvjera)) {
+        i = 0;
+      }
+
+      if (i == 0) {
+         
+        if (!orgUser.equals(orgJed)) {
+          pBrojProvjera = pBroj;
+          izbaciPoruku("Ne odgovara organizaciona jedinica. Unesite ponovo");
+          i++;
+          return null;
+        }
+
+        if (paketDN == false) {
+          pBrojProvjera = pBroj;
+          //   BrojAttr.setInputValue(null);
+          izbaciPoruku("Paket ne postoji u bazi. Unesite ponovo");
+          i++;
+          return null;
+        }
+   //     System.out.println(status);
+
+
+        if (!status.equals("T")) {
+          pBrojProvjera = pBroj;
+          //   BrojAttr.setInputValue(null);
+          izbaciPoruku("Paket koji ste naveli nije u statusu 'U TRANSPORTU'.Ponovite unos");
+          i++;
+          return null;
+        }
+
+        if (pVpkSifra2 != null) {
+          // if (ProvjeraStMasterPck(pVpkSifra2, pBroj2)== false){
+          st = proc.St(pVpkSifra2, pBroj2);
+          if (!st.equals("R")) {
+            pBrojProvjera = pBroj;
+            izbaciPoruku("Master paket nije bio u statusu 'PRIMLJEN'. Ponovite unos");
+            i++;
+            return null;
+          }
+        }
+
+        pBrojProvjera = pBroj;
+        i++;
+        return "prijem";
+          
+      }
+
+      else {
+
+        if (!orgUser.equals(orgJed)) {
+          proc.Novistatus(vpkS, brO, "N", null);
+          proc.DodajNeslaganje(vpkS, brO, 103);
+          am.getTransaction().commit();
+
+        }
+          
+        if (paketDN == false) {
+          // proc.DodajNeslaganje(vpkS, brO, 102);
+          //  proc.Novistatus(vpkS, brO, "N", null);
+          izbaciPoruku("Nema paketa");
+        }
+        if (!status.equals("T")) {
+        proc.Novistatus(vpkS, brO, "N", null);
+        proc.DodajNeslaganje(vpkS, brO, 103);
+        am.getTransaction().commit();
+       
+        }
+
+        if (pVpkSifra2 != null) {
+          st = proc.St(pVpkSifra2, pBroj2);
+          if (!st.equals("R")) {
+              proc.Novistatus(vpkS, brO, "N", null);
+              proc.DodajNeslaganje(vpkS, brO, 103);
+              am.getTransaction().commit();
+           
+          }
+
+        }
+      }
+    }
+
+    catch (Exception e) {
+      String GRESKA = e.getMessage();
+      //    Utils.prikaziPoruku(GRESKA, Utils.tipPoruke.INFO);
+    }
+    pBrojProvjera = pBroj;
+
+    return "prijem";
+  }

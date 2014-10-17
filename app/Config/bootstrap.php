@@ -97,6 +97,7 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 CakePlugin::load('AclExtras');
+CakePlugin::load('DocumentManager', array('bootstrap' => false));
 
 Configure::write('Site.name', 'Service Desk');
-Configure::write('Config.language', 'srp');
+//Configure::write('Config.language', 'en');

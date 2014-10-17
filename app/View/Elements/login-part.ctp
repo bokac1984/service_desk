@@ -4,10 +4,10 @@
         <ul class="dropdown-menu" role="menu">
             <li><a href="#">Profile</a></li>
             <li class="divider"></li>
-            <li><?php echo $this->Html->link('Odjavi se', array('controller' => 'users', 'action' => 'logout')); ?></li>
+            <li><?php echo $this->Html->link('Odjavi se', array('prefix' => null, 'plugin' => null,'controller' => 'users', 'action' => 'logout')); ?></li>
         </ul>
     </li>
 
 <?php else: ?>
-    <li><?php echo $this->Html->link('Prijavi se', array('controller' => 'users', 'action' => 'login')); ?></li>
+    <li><?php echo $this->Html->link('Prijavi se', array('prefix' => null, 'plugin' => null,'controller' => 'users', 'action' => 'login')); ?></li>
 <?php endif; ?>
