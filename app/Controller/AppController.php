@@ -29,6 +29,7 @@ class AppController extends Controller {
         'Acl',
         'Auth' => array(
             'authorize' => array(
+                'Controller',
                 'Actions' => array('actionPath' => 'controllers')
             )
         ),
@@ -72,6 +73,21 @@ class AppController extends Controller {
         }
         
         $this->set('groupId', $this->groupId);
+        $this->Auth->allow('*');
+    }
+    
+    public function isAuthorized($user) {
+        // Admin can access every action
+        if (isset($user['group_id']) && $user['group_id'] === '1') {
+            return true;
+        }
+        
+        if ($this->action === 'login' || $this->action === 'logout') {
+            return true;
+        }
+        
+        // Default deny
+        return false;
     }
 
 }

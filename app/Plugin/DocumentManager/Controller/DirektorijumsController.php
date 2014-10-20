@@ -9,7 +9,6 @@ App::uses('DocumentManagerAppController', 'DocumentManager.Controller');
  * @property PaginatorComponent $Paginator
  */
 class DirektorijumsController extends DocumentManagerAppController {
-
     /**
      * Components
      *
@@ -17,6 +16,9 @@ class DirektorijumsController extends DocumentManagerAppController {
      */
     public $components = array('Paginator');
 
+    public function isAuthorized($user) {
+        return parent::isAuthorized($user);
+    }
     /**
      * index method
      *
@@ -24,7 +26,18 @@ class DirektorijumsController extends DocumentManagerAppController {
      */
     public function index() {
         $this->Direktorijum->recursive = 0;
-        $this->set('direktorijums', $this->Paginator->paginate());
+        $direktorijums = $this->Direktorijum->generateTreeList(
+          array(
+              'parent_id' => null,
+              'user_id' => $this->Auth->user('id')
+          ),
+          null,
+          null,
+          '&nbsp;&nbsp;&nbsp;'
+        );
+        //debug($direktorijums);exit();
+        debug($this->passedArgs);
+        $this->set('direktorijums', $direktorijums);
     }
 
     /**
@@ -49,6 +62,7 @@ class DirektorijumsController extends DocumentManagerAppController {
      */
     public function add() {
         if ($this->request->is('post')) {
+            $this->request->data[$this->Direktorijum->name]['user_id'] = $this->Auth->user('id');
             $this->Direktorijum->create();
             if ($this->Direktorijum->save($this->request->data)) {
                 $this->Session->setFlash(__('The direktorijum has been saved.'));
@@ -57,8 +71,12 @@ class DirektorijumsController extends DocumentManagerAppController {
                 $this->Session->setFlash(__('The direktorijum could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Direktorijum->User->find('list');
-        $parentDirektorijums = $this->Direktorijum->ParentDirektorijum->find('list');
+        //$users = $this->Direktorijum->User->find('list');
+        $parentDirektorijums = $this->Direktorijum->ParentDirektorijum->find('list', array(
+            'conditions' => array(
+                'ParentDirektorijum.user_id' => $this->Auth->user('id')
+            )
+        ));
         $documents = $this->Direktorijum->Document->find('list');
         $this->set(compact('users', 'parentDirektorijums', 'documents'));
     }

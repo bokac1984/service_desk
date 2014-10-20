@@ -1,12 +1,11 @@
 <div class="users index">
 	<h2><?php echo __('Users'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
+        <table cellpadding="0" cellspacing="0" class="table">
 	<thead>
 	<tr>
 			<th><?php echo $this->Paginator->sort('group_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('username'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th><?php echo $this->Paginator->sort('last_login'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
@@ -18,7 +17,6 @@
 			<?php echo $this->Html->link($user['Group']['name'], array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])); ?>
 		</td>
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['created']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['modified']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['last_login']); ?>&nbsp;</td>
 		<td class="actions">

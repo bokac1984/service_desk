@@ -45,6 +45,18 @@
         <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
     </li>
     <li>
+        <a href="#"><i class="fa fa-edit fa-fw"></i> Dokumenti<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <?php echo $this->Link->cLink('Novi', array('prefix' => null, 'plugin' => 'document_manager', 'controller' => 'direktorijums', 'action' => 'add'), 'fa fa-table fa-fw'); ?>
+            </li>
+            <li>
+                <?php echo $this->Link->cLink('Lista', array('prefix' => null, 'plugin' => 'document_manager', 'controller' => 'direktorijums', 'action' => 'index'), 'fa fa-table fa-fw'); ?>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+    <li>
         <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>

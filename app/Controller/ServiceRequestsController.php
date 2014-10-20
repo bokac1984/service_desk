@@ -18,6 +18,20 @@ class ServiceRequestsController extends AppController {
      */
     public $components = array('Paginator', 'Session');
 
+    public function isAuthorized($user) {
+        // All registered users 
+        if ($this->action === 'add' || $this->action === 'index') {
+            return true;
+        }
+
+        // The owner 
+        if (in_array($this->action, array('edit', 'delete', 'view'))) {
+            $id = (int) $this->request->params['pass'][0];
+            return $this->ServiceRequest->isOwnedBy($user);
+        }
+
+        return parent::isAuthorized($user);
+    }
     /**
      * index method
      *

@@ -38,17 +38,17 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dokumenti <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><?php echo $this->Html->link('Dodaj dokument', array('controller' => 'service_requests', 'action' => 'add')); ?></li>
+                                <li><?php echo $this->Html->link('Dodaj dokument', array('prefix' => null, 'plugin' => 'document_manager', 'controller' => 'direktorijums', 'action' => 'add')); ?></li>
                                 <li class="divider"></li>
-                                <li><?php echo $this->Html->link('Pregled', array('controller' => 'service_requests', 'action' => 'index')); ?></li>
+                                <li><?php echo $this->Html->link('Pregled', array('prefix' => null, 'plugin' => 'document_manager', 'controller' => 'direktorijums', 'action' => 'index')); ?></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Service desk <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><?php echo $this->Html->link('Otvori tiket', array('controller' => 'service_requests', 'action' => 'add')); ?></li>
+                                <li><?php echo $this->Html->link('Otvori tiket', array('prefix' => null, 'plugin' => null,'controller' => 'service_requests', 'action' => 'add')); ?></li>
                                 <li class="divider"></li>
-                                <li><?php echo $this->Html->link('Pregled', array('controller' => 'service_requests', 'action' => 'index')); ?></li>
+                                <li><?php echo $this->Html->link('Pregled', array('prefix' => null, 'plugin' => null, 'controller' => 'service_requests', 'action' => 'index')); ?></li>
                             </ul>
                         </li>
                         <?php echo $this->element('login-part') ?>

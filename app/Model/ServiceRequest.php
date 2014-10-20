@@ -199,8 +199,24 @@ class ServiceRequest extends AppModel {
             'user_id' => $Session->read('Auth.User.id'),
             'ip' => ''
         );
-        debug($historyData);
+        
         $this->ServiceRequestsH->save($historyData);
         return parent::afterSave($created, $options);
     }
+    
+//    public function isOwnedBy($user) {
+//       /* $data = $this->find('first', array(
+//            'conditions' => array(
+//                'ServiceRequest.user_id' => $user['id']
+//            ),
+//            'recursive' => '-1',
+//            'fields' => array(
+//                'ServiceRequest.id'
+//            )
+//        ));*/
+//        
+//        return $this->field('id', array('user_id' => $user['id'])) !== false;
+//        
+//        parent::isOwnedBy($user);
+//    }
 }

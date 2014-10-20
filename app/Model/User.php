@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppModel', 'Model');
+App::uses('Folder', 'Utility');
 
 /**
  * User Model
@@ -9,6 +10,7 @@ App::uses('AppModel', 'Model');
  * @property ServiceRequest $ServiceRequest
  * @property ServiceRequestsH $ServiceRequestsH
  * @property Solver $Solver
+ * @property Direktorijum $Direktorijum
  */
 class User extends AppModel {
 
@@ -22,6 +24,16 @@ class User extends AppModel {
         'group_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'username' => array(
+            'unique' => array(
+                'rule' => array('isUnique'),
             //'message' => 'Your custom message here',
             //'allowEmpty' => false,
             //'required' => false,
@@ -92,7 +104,11 @@ class User extends AppModel {
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
-        )
+        ),
+        'Direktorijum' => array(
+            'className' => 'Direktorijum',
+            'foreignKey' => 'user_id',
+        ),
     );
     public $actsAs = array('Acl' => array('type' => 'requester', 'enabled' => false));
 
@@ -127,5 +143,24 @@ class User extends AppModel {
         );
         return true;
     }
-
+    
+    public function afterSave($created, $options = array()) {
+        if ($created) {
+            $folder = new Folder();
+            $folderName = $this->data['User']['username'];
+            if ($folder->create('files'.DS.$folderName)) {
+                $data = array('Direktorijum' => array(
+                    'parent_id' => null,
+                    'name' => $folderName
+                ));
+                if ($this->Direktorijum->save($data)) {
+                    $this->log('Folder uspjesno kreiran');
+                }
+            } else {
+                $this->log('Folder nije moguce bilo kreirati');
+            }
+        }
+        
+        parent::afterSave($created, $options);
+    }
 }

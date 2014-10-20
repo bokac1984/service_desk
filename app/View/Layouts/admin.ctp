@@ -237,7 +237,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><?php echo $this->Link->cLink('Odjavi se', array('controller' => 'users', 'action' => 'logout'), 'fa fa-sign-out fa-fw'); ?></li>
+                        <li><?php echo $this->Link->cLink('Odjavi se', array('prefix' => null, 'plugin' => null, 'controller' => 'users', 'action' => 'logout'), 'fa fa-sign-out fa-fw'); ?></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

@@ -13,6 +13,9 @@ class DocumentsController extends DocumentManagerAppController {
  */
 	public $components = array('Paginator');
 
+    public function isAuthorized($user) {
+        parent::isAuthorized($user);
+    }
 /**
  * index method
  *

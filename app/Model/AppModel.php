@@ -27,4 +27,13 @@ class AppModel extends Model {
         $lastLog = end($logs['log']);
         return $lastLog['query'];
     }
+    /**
+     * Check if given object belongs to user
+     * 
+     * @param object $user
+     * @return boolean
+     */
+    public function isOwnedBy($user) {
+        return $this->field('id', array('user_id' => $user['id'])) !== false;
+    }
 }
