@@ -54,6 +54,7 @@ class AppController extends Controller {
         );
         $this->Auth->authError = __('Nije dozvoljena ta stranica');
         $this->Auth->loginError = __('Pogresno korisnicko ime ili lozinka');
+        $this->Auth->flash['element'] = "flashError";
         
         if ($this->Auth->user()) {
             $this->groupId = $this->Auth->user('group_id');

@@ -44,5 +44,9 @@ class Document extends DocumentManagerAppModel {
             'finderQuery' => '',
         )
     );
+    
+    public function saveFileInfo() {
+        
+    }
 
 }

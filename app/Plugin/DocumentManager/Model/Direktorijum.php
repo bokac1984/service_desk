@@ -1,6 +1,7 @@
 <?php
 
 App::uses('DocumentManagerAppModel', 'DocumentManager.Model');
+App::uses('Folder', 'Utility');
 
 /**
  * Direktorijum Model
@@ -104,5 +105,55 @@ class Direktorijum extends DocumentManagerAppModel {
             'finderQuery' => '',
         )
     );
+    
+    public function createParentLinkFolder($data = array()) {
+        if (!empty($data)) {
+            $parentId = $this->getParentDirId($data['Direktorijum']['id']) != null ? $this->getParentDirId($data['Direktorijum']['id']) : 0;
+            $parentLink = array(
+                'id' => $parentId,
+                'name' => '...',
+                'created' => '',
+                'modified' => '',
+            );
+            array_unshift($data['ChildDirektorijum'], $parentLink);
+        }
+        
+        //debug($data);exit();
+        
+        return $data;
+    }
+    
+    public function getParentDirId($currentId = null) {
+        if ($currentId) {
+            $parent = $this->getParentNode($currentId);
+            if (!empty($parent)) {
+                return $parent['Direktorijum']['id'];
+            }
+        }
+        
+        return null;
+    }
+    
+    public function createFolder($rootFolder = '', $name) {
+        $folder = new Folder();
+        $path = $this->root.DS;
+        if (empty($rootFolder)) {
+            $path  = $path . DS . $name;
+        } else {
+            $path  = $path . DS . $rootFolder . DS . $name;
+        }
+        
+        if ($folder->create($pathname)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public function beforeSave($options = array()) {
+        $data = $this->children(1, true);
+        //debug($data);exit();
+        parent::beforeSave($options);
+    }
 
 }

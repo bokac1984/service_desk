@@ -151,6 +151,7 @@ class User extends AppModel {
             if ($folder->create('files'.DS.$folderName)) {
                 $data = array('Direktorijum' => array(
                     'parent_id' => null,
+                    'user_id' => $this->getLastInsertId(),
                     'name' => $folderName
                 ));
                 if ($this->Direktorijum->save($data)) {

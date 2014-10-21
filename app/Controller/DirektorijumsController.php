@@ -1,6 +1,6 @@
 <?php
 
-App::uses('DocumentManagerAppController', 'DocumentManager.Controller');
+App::uses('AppController', 'Controller');
 
 /**
  * Direktorijums Controller
@@ -8,7 +8,7 @@ App::uses('DocumentManagerAppController', 'DocumentManager.Controller');
  * @property Direktorijum $Direktorijum
  * @property PaginatorComponent $Paginator
  */
-class DirektorijumsController extends DocumentManagerAppController {
+class DirektorijumsController extends AppController {
 
     /**
      * Components
@@ -27,22 +27,14 @@ class DirektorijumsController extends DocumentManagerAppController {
      * @return void
      */
     public function index() {
-//        $this->Direktorijum->recursive = 0;
-//        $direktorijums = $this->Direktorijum->generateTreeList(
-//          array(
-//              'parent_id' => null,
-//              'user_id' => $this->Auth->user('id')
-//          ),
-//          null,
-//          null,
-//          '&nbsp;&nbsp;&nbsp;'
-//        );
-//        
-//        $this->set('direktorijums', $direktorijums);
         $this->Direktorijum->recursive = 0;
+        $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
+        if ($id === 0) {
+            throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
+        }
         $this->set('direktorijums', $this->Paginator->paginate('Direktorijum', array(
                     'Direktorijum.user_id' => $this->Auth->user('id'),
-                    'Direktorijum.parent_id' => null,
+                    'Direktorijum.parent_id' => $id,
         )));
     }
 
@@ -71,19 +63,23 @@ class DirektorijumsController extends DocumentManagerAppController {
      */
     public function add($id = null) {
         if ($this->request->is('post')) {
-
             $this->request->data[$this->Direktorijum->name]['user_id'] = $this->Auth->user('id');
             $this->Direktorijum->create();
-            
-            if ($id !== null) {
-                $this->request->data[$this->Direktorijum->name]['parent_id'] = $id;
+
+            if ($id === null) {
+                $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
+                if ($id === 0) {
+                    throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
+                }
             }
+            
+            $this->request->data[$this->Direktorijum->name]['parent_id'] = $id;
 
             if ($this->Direktorijum->save($this->request->data)) {
-                $this->Session->setFlash(__('The direktorijum has been saved.'));
+                $this->Session->setFlash(__('Folder uspjesno kreiran.'), 'flashSuccess');
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The direktorijum could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Nije moguce kreirati folder, pokusajte ponovo.'), 'flashError');
             }
         }
 

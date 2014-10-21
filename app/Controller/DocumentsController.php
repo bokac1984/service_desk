@@ -1,12 +1,12 @@
 <?php
 
-App::uses('DocumentManagerAppController', 'DocumentManager.Controller');
+App::uses('AppController', 'Controller');
 
 /**
  * Documents Controller
  *
  */
-class DocumentsController extends DocumentManagerAppController {
+class DocumentsController extends AppController {
 
     /**
      * Components

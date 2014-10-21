@@ -1,28 +1,44 @@
 <div class="users form">
-<?php echo $this->Form->create('User'); ?>
+    <?php
+    echo $this->Form->create('User', array(
+        'plugin' => null,
+        'controller' => 'users',
+        'action' => 'add',
+        'class' => 'form',
+        'method' => 'post'
+    ));
+    $this->Form->inputDefaults(array(
+        'error' => array(
+            'attributes' => array(
+                'wrap' => 'div',
+                'class' => 'label label-warning'
+            )
+        ),
+        'div' => 'form-group'
+            )
+    );
+    ?>
 	<fieldset>
 		<legend><?php echo __('Add User'); ?></legend>
 	<?php
-		echo $this->Form->input('group_id');
-		echo $this->Form->input('username');
-		echo $this->Form->input('password');
-		echo $this->Form->input('last_login');
+		echo $this->Form->input('group_id', array(
+                    'label' => 'Grupa',
+                    'class' => 'form-control',
+                ));
+		echo $this->Form->input('username', array(
+                    'label' => 'Korisničko ime',
+                    'class' => 'form-control',
+                ));
+		echo $this->Form->input('password', array(
+                    'label' => 'Šifra',
+                    'class' => 'form-control',
+                ));
+                echo $this->Form->button('Kreiraj korisnika', array(
+                    'type' => 'submit',
+                    'class' => 'btn margint20',
+                    'id' => 'create-folder'
+                ));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Groups'), array('controller' => 'groups', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Group'), array('controller' => 'groups', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Service Requests'), array('controller' => 'service_requests', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Service Request'), array('controller' => 'service_requests', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Service Requests Hs'), array('controller' => 'service_requests_hs', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Service Requests H'), array('controller' => 'service_requests_hs', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Solvers'), array('controller' => 'solvers', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Solver'), array('controller' => 'solvers', 'action' => 'add')); ?> </li>
-	</ul>
+<?php echo $this->Form->end(); ?>
 </div>

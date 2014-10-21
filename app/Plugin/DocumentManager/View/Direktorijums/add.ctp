@@ -26,12 +26,6 @@
             'label' => 'Naziv',
             'class' => 'form-control',
         ));
-        echo $this->Form->input('parent_id', array(
-            'class' => 'form-control',
-            'label' => 'Root folder',
-            'empty' => 'Odaberi', 
-            'options' => $parentDirektorijums
-        ));
         echo $this->Form->button('Kreiraj folder', array(
             'type' => 'submit',
             'class' => 'btn margint20',

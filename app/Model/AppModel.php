@@ -21,6 +21,14 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+    public $root;
+    
+    public function __construct($id = false, $table = null, $ds = null) {
+        $this->root = 'files';
+        parent::__construct($id, $table, $ds);
+    }
+
+
     public function getLastQuery() {
         $dbo = $this->getDatasource();
         $logs = $dbo->getLog();

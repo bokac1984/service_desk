@@ -1,13 +1,8 @@
 <div class="direktorijums view">
-    <h2><?php echo __('Direktorijum'); ?></h2>
+    <h2><?php echo __($direktorijum['Direktorijum']['name']); ?></h2>
     <dl>
         <dd>
-            <?php echo $this->Html->link($direktorijum['User']['username'], array('controller' => 'users', 'action' => 'view', $direktorijum['User']['id'])); ?>
-            &nbsp;
-        </dd>
-        <dt><?php echo __('Name'); ?></dt>
-        <dd>
-            <?php echo h($direktorijum['Direktorijum']['name']); ?>
+            <?php echo 'Sadržaj foldera'; ?>
             &nbsp;
         </dd>
     </dl>
