@@ -27,10 +27,12 @@
     </div>
     <div class="actions">
         <?php echo $this->Html->link(__('Novi folder'), array('action' => 'add'), array('class' => 'btn btn-primary')); ?>
+        <?php echo $this->Html->link(__('Dodaj fajl'), array('controller' => 'documents', 'action' => 'add'), array('class' => 'btn btn-primary')); ?>
     </div>
 <?php else: ?>
     <div class="row">
         <h2>Nemate podataka</h2>
         <?php echo $this->Html->link('Novi folder', array('prefix' => null, 'plugin' => null, 'controller' => 'direktorijums', 'action' => 'add'), array('class' => 'btn btn-primary btn-lg')) ?>
+        <?php echo $this->Html->link(__('Dodaj fajl'), array('controller' => 'documents', 'action' => 'add'), array('class' => 'btn btn-primary')); ?>
     </div>
 <?php endif; ?>

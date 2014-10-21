@@ -52,7 +52,7 @@ class DocumentsController extends AppController {
     public function add($id = null) {
         if ($this->request->is('post')) {
             $this->Document->create();
-            debug($this->request->data);exit();
+            //debug($this->request->data);exit();
             if ($this->Document->saveAll($this->request->data)) {
                 $this->Session->setFlash(__('The document has been saved.'));
                 return $this->redirect(array('action' => 'index'));

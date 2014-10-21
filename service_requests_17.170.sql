@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2014 at 03:37 PM
+-- Generation Time: Oct 17, 2014 at 03:22 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -38,106 +38,81 @@ CREATE TABLE IF NOT EXISTS `acos` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=122 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=97 ;
 
 --
 -- Dumping data for table `acos`
 --
 
 INSERT INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
-(1, NULL, NULL, NULL, 'controllers', 1, 186),
-(2, 1, NULL, NULL, 'Categories', 2, 17),
+(1, NULL, NULL, NULL, 'controllers', 1, 136),
+(2, 1, NULL, NULL, 'Categories', 2, 15),
 (3, 2, NULL, NULL, 'index', 3, 4),
 (4, 2, NULL, NULL, 'view', 5, 6),
 (5, 2, NULL, NULL, 'add', 7, 8),
 (6, 2, NULL, NULL, 'edit', 9, 10),
 (7, 2, NULL, NULL, 'delete', 11, 12),
-(8, 1, NULL, NULL, 'Groups', 18, 31),
-(9, 8, NULL, NULL, 'index', 19, 20),
-(10, 8, NULL, NULL, 'view', 21, 22),
-(11, 8, NULL, NULL, 'add', 23, 24),
-(12, 8, NULL, NULL, 'edit', 25, 26),
-(13, 8, NULL, NULL, 'delete', 27, 28),
-(14, 1, NULL, NULL, 'Pages', 32, 37),
-(15, 14, NULL, NULL, 'display', 33, 34),
-(16, 1, NULL, NULL, 'Priorities', 38, 51),
-(17, 16, NULL, NULL, 'index', 39, 40),
-(18, 16, NULL, NULL, 'view', 41, 42),
-(19, 16, NULL, NULL, 'add', 43, 44),
-(20, 16, NULL, NULL, 'edit', 45, 46),
-(21, 16, NULL, NULL, 'delete', 47, 48),
-(22, 1, NULL, NULL, 'ServiceRequests', 52, 65),
-(23, 22, NULL, NULL, 'index', 53, 54),
-(24, 22, NULL, NULL, 'view', 55, 56),
-(25, 22, NULL, NULL, 'add', 57, 58),
-(26, 22, NULL, NULL, 'edit', 59, 60),
-(27, 22, NULL, NULL, 'delete', 61, 62),
-(28, 1, NULL, NULL, 'ServiceRequestsHes', 66, 79),
-(29, 28, NULL, NULL, 'index', 67, 68),
-(30, 28, NULL, NULL, 'view', 69, 70),
-(31, 28, NULL, NULL, 'add', 71, 72),
-(32, 28, NULL, NULL, 'edit', 73, 74),
-(33, 28, NULL, NULL, 'delete', 75, 76),
-(34, 1, NULL, NULL, 'Solvers', 80, 93),
-(35, 34, NULL, NULL, 'index', 81, 82),
-(36, 34, NULL, NULL, 'view', 83, 84),
-(37, 34, NULL, NULL, 'add', 85, 86),
-(38, 34, NULL, NULL, 'edit', 87, 88),
-(39, 34, NULL, NULL, 'delete', 89, 90),
-(40, 1, NULL, NULL, 'Statuses', 94, 107),
-(41, 40, NULL, NULL, 'index', 95, 96),
-(42, 40, NULL, NULL, 'view', 97, 98),
-(43, 40, NULL, NULL, 'add', 99, 100),
-(44, 40, NULL, NULL, 'edit', 101, 102),
-(45, 40, NULL, NULL, 'delete', 103, 104),
-(46, 1, NULL, NULL, 'Users', 108, 125),
-(47, 46, NULL, NULL, 'login', 109, 110),
-(48, 46, NULL, NULL, 'logout', 111, 112),
-(49, 46, NULL, NULL, 'index', 113, 114),
-(50, 46, NULL, NULL, 'view', 115, 116),
-(51, 46, NULL, NULL, 'add', 117, 118),
-(52, 46, NULL, NULL, 'edit', 119, 120),
-(53, 46, NULL, NULL, 'delete', 121, 122),
-(55, 1, NULL, NULL, 'AclExtras', 126, 127),
+(8, 1, NULL, NULL, 'Groups', 16, 27),
+(9, 8, NULL, NULL, 'index', 17, 18),
+(10, 8, NULL, NULL, 'view', 19, 20),
+(11, 8, NULL, NULL, 'add', 21, 22),
+(12, 8, NULL, NULL, 'edit', 23, 24),
+(13, 8, NULL, NULL, 'delete', 25, 26),
+(14, 1, NULL, NULL, 'Pages', 28, 31),
+(15, 14, NULL, NULL, 'display', 29, 30),
+(16, 1, NULL, NULL, 'Priorities', 32, 43),
+(17, 16, NULL, NULL, 'index', 33, 34),
+(18, 16, NULL, NULL, 'view', 35, 36),
+(19, 16, NULL, NULL, 'add', 37, 38),
+(20, 16, NULL, NULL, 'edit', 39, 40),
+(21, 16, NULL, NULL, 'delete', 41, 42),
+(22, 1, NULL, NULL, 'ServiceRequests', 44, 55),
+(23, 22, NULL, NULL, 'index', 45, 46),
+(24, 22, NULL, NULL, 'view', 47, 48),
+(25, 22, NULL, NULL, 'add', 49, 50),
+(26, 22, NULL, NULL, 'edit', 51, 52),
+(27, 22, NULL, NULL, 'delete', 53, 54),
+(28, 1, NULL, NULL, 'ServiceRequestsHes', 56, 67),
+(29, 28, NULL, NULL, 'index', 57, 58),
+(30, 28, NULL, NULL, 'view', 59, 60),
+(31, 28, NULL, NULL, 'add', 61, 62),
+(32, 28, NULL, NULL, 'edit', 63, 64),
+(33, 28, NULL, NULL, 'delete', 65, 66),
+(34, 1, NULL, NULL, 'Solvers', 68, 79),
+(35, 34, NULL, NULL, 'index', 69, 70),
+(36, 34, NULL, NULL, 'view', 71, 72),
+(37, 34, NULL, NULL, 'add', 73, 74),
+(38, 34, NULL, NULL, 'edit', 75, 76),
+(39, 34, NULL, NULL, 'delete', 77, 78),
+(40, 1, NULL, NULL, 'Statuses', 80, 91),
+(41, 40, NULL, NULL, 'index', 81, 82),
+(42, 40, NULL, NULL, 'view', 83, 84),
+(43, 40, NULL, NULL, 'add', 85, 86),
+(44, 40, NULL, NULL, 'edit', 87, 88),
+(45, 40, NULL, NULL, 'delete', 89, 90),
+(46, 1, NULL, NULL, 'Users', 92, 107),
+(47, 46, NULL, NULL, 'login', 93, 94),
+(48, 46, NULL, NULL, 'logout', 95, 96),
+(49, 46, NULL, NULL, 'index', 97, 98),
+(50, 46, NULL, NULL, 'view', 99, 100),
+(51, 46, NULL, NULL, 'add', 101, 102),
+(52, 46, NULL, NULL, 'edit', 103, 104),
+(53, 46, NULL, NULL, 'delete', 105, 106),
+(55, 1, NULL, NULL, 'AclExtras', 108, 109),
 (56, 2, NULL, NULL, 'listChildCategories', 13, 14),
-(71, 1, NULL, NULL, 'DocumentManager', 128, 157),
-(72, 71, NULL, NULL, 'Documents', 129, 142),
-(73, 72, NULL, NULL, 'index', 130, 131),
-(87, 71, NULL, NULL, 'Direktorijums', 143, 156),
-(88, 87, NULL, NULL, 'index', 144, 145),
-(89, 87, NULL, NULL, 'view', 146, 147),
-(90, 87, NULL, NULL, 'add', 148, 149),
-(91, 87, NULL, NULL, 'edit', 150, 151),
-(92, 87, NULL, NULL, 'delete', 152, 153),
-(93, 72, NULL, NULL, 'view', 132, 133),
-(94, 72, NULL, NULL, 'add', 134, 135),
-(95, 72, NULL, NULL, 'edit', 136, 137),
-(96, 72, NULL, NULL, 'delete', 138, 139),
-(97, 2, NULL, NULL, 'isAuthorized', 15, 16),
-(98, 8, NULL, NULL, 'isAuthorized', 29, 30),
-(99, 14, NULL, NULL, 'isAuthorized', 35, 36),
-(100, 16, NULL, NULL, 'isAuthorized', 49, 50),
-(101, 22, NULL, NULL, 'isAuthorized', 63, 64),
-(102, 28, NULL, NULL, 'isAuthorized', 77, 78),
-(103, 34, NULL, NULL, 'isAuthorized', 91, 92),
-(104, 40, NULL, NULL, 'isAuthorized', 105, 106),
-(105, 46, NULL, NULL, 'isAuthorized', 123, 124),
-(106, 87, NULL, NULL, 'isAuthorized', 154, 155),
-(107, 72, NULL, NULL, 'isAuthorized', 140, 141),
-(108, 1, NULL, NULL, 'Direktorijums', 158, 171),
-(109, 108, NULL, NULL, 'isAuthorized', 159, 160),
-(110, 108, NULL, NULL, 'index', 161, 162),
-(111, 108, NULL, NULL, 'view', 163, 164),
-(112, 108, NULL, NULL, 'add', 165, 166),
-(113, 108, NULL, NULL, 'edit', 167, 168),
-(114, 108, NULL, NULL, 'delete', 169, 170),
-(115, 1, NULL, NULL, 'Documents', 172, 185),
-(116, 115, NULL, NULL, 'isAuthorized', 173, 174),
-(117, 115, NULL, NULL, 'index', 175, 176),
-(118, 115, NULL, NULL, 'view', 177, 178),
-(119, 115, NULL, NULL, 'add', 179, 180),
-(120, 115, NULL, NULL, 'edit', 181, 182),
-(121, 115, NULL, NULL, 'delete', 183, 184);
+(71, 1, NULL, NULL, 'DocumentManager', 110, 135),
+(72, 71, NULL, NULL, 'Documents', 111, 122),
+(73, 72, NULL, NULL, 'index', 112, 113),
+(87, 71, NULL, NULL, 'Direktorijums', 123, 134),
+(88, 87, NULL, NULL, 'index', 124, 125),
+(89, 87, NULL, NULL, 'view', 126, 127),
+(90, 87, NULL, NULL, 'add', 128, 129),
+(91, 87, NULL, NULL, 'edit', 130, 131),
+(92, 87, NULL, NULL, 'delete', 132, 133),
+(93, 72, NULL, NULL, 'view', 114, 115),
+(94, 72, NULL, NULL, 'add', 116, 117),
+(95, 72, NULL, NULL, 'edit', 118, 119),
+(96, 72, NULL, NULL, 'delete', 120, 121);
 
 -- --------------------------------------------------------
 
@@ -183,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
   `_delete` varchar(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ARO_ACO_KEY` (`aro_id`,`aco_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `aros_acos`
@@ -206,10 +181,8 @@ INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`
 (16, 3, 48, '1', '1', '1', '1'),
 (17, 2, 56, '1', '1', '1', '1'),
 (18, 3, 56, '1', '1', '1', '1'),
-(21, 2, 108, '1', '1', '1', '1'),
-(22, 3, 108, '1', '1', '1', '1'),
-(23, 2, 115, '1', '1', '1', '1'),
-(24, 3, 115, '1', '1', '1', '1');
+(19, 2, 72, '1', '1', '1', '1'),
+(20, 3, 72, '1', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -278,16 +251,17 @@ CREATE TABLE IF NOT EXISTS `direktorijums` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `direktorijums`
 --
 
 INSERT INTO `direktorijums` (`id`, `user_id`, `name`, `parent_id`, `lft`, `rght`, `created`, `modified`) VALUES
-(22, '18', 'test_user', NULL, 23, 28, '2014-10-21 12:17:41', '2014-10-21 12:17:41'),
-(41, '18', 'Bokac', 22, 24, 25, '2014-10-21 14:49:16', '2014-10-21 14:49:16'),
-(43, '18', 'folder', 22, 26, 27, '2014-10-21 15:05:01', '2014-10-21 15:05:01');
+(1, '1', 'Proba folder', NULL, 1, 8, '2014-10-17 14:51:33', '2014-10-17 14:51:33'),
+(2, '1', 'drugi folder', 1, 2, 5, '2014-10-17 15:12:38', '2014-10-17 15:12:38'),
+(3, '1', 'treci', 1, 6, 7, '2014-10-17 15:12:53', '2014-10-17 15:12:53'),
+(4, '1', 'cetvrti', 2, 3, 4, '2014-10-17 15:17:05', '2014-10-17 15:17:05');
 
 -- --------------------------------------------------------
 
@@ -310,22 +284,13 @@ CREATE TABLE IF NOT EXISTS `direktorijums_documents` (
 
 DROP TABLE IF EXISTS `documents`;
 CREATE TABLE IF NOT EXISTS `documents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `size` double DEFAULT NULL,
-  `path` varchar(150) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `documents`
---
-
-INSERT INTO `documents` (`id`, `name`, `size`, `path`, `created`, `modified`) VALUES
-(1, 'asa', NULL, '', '2014-10-21 10:05:45', '2014-10-21 10:05:45'),
-(2, 'potaman', NULL, '', '2014-10-21 10:10:41', '2014-10-21 10:10:41');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -537,20 +502,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_user_belongs_to_group` (`group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `group_id`, `username`, `password`, `created`, `modified`, `last_login`) VALUES
-(1, 1, 'bokac', '6bb20f3193e6dbfc186bcdbdb7430a5812e032c6', '2014-09-09 15:55:56', '2014-09-09 15:55:56', '2014-10-21 13:06:05'),
-(2, 2, 'korisnik', 'b4faad969b3eef368d6b9ba6d2848030dd1b127d', '2014-09-09 15:56:07', '2014-09-09 15:56:07', '2014-10-21 13:06:52'),
-(3, 3, 'operator', 'a53530590bd1d2db3e677903a45d38a6b268e7a9', '2014-09-09 15:56:19', '2014-09-09 15:56:19', '2014-10-20 11:38:49'),
+(1, 1, 'bokac', '6bb20f3193e6dbfc186bcdbdb7430a5812e032c6', '2014-09-09 15:55:56', '2014-09-09 15:55:56', '2014-10-17 15:12:28'),
+(2, 2, 'korisnik', 'b4faad969b3eef368d6b9ba6d2848030dd1b127d', '2014-09-09 15:56:07', '2014-09-09 15:56:07', '2014-10-16 09:56:33'),
+(3, 3, 'operator', 'a53530590bd1d2db3e677903a45d38a6b268e7a9', '2014-09-09 15:56:19', '2014-09-09 15:56:19', '2014-10-09 15:57:54'),
 (4, 3, 'pecanac', '6ff8805379f6f14ab5c3339f1e17a263d8922d02', '2014-09-10 10:15:26', '2014-09-10 10:15:51', '2014-09-10 10:15:00'),
 (5, 3, 'goran', '4eec82ef7a20fb0438f7e64840f84bb28ab23238', '2014-09-10 10:16:48', '2014-09-10 10:16:48', '2014-09-10 10:16:00'),
-(6, 2, 'korisnik2', '538bd55e2f0c093efec91c1652d8d4e655b5ee43', '2014-09-29 09:45:00', '2014-09-29 09:45:00', '2014-10-16 08:48:38'),
-(18, 2, 'test_user', '46a53cbc9a6db6915cb428193256b569f0e48317', '2014-10-21 13:06:41', '2014-10-21 13:06:41', '2014-10-21 15:19:26');
+(6, 2, 'korisnik2', '538bd55e2f0c093efec91c1652d8d4e655b5ee43', '2014-09-29 09:45:00', '2014-09-29 09:45:00', '2014-10-16 08:48:38');
 
 -- --------------------------------------------------------
 
