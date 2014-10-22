@@ -25,6 +25,7 @@
             'label' => 'Naziv',
             'class' => 'form-control',
         ));
+        echo $this->Form->input('parent_id', array('type' => 'hidden'));
         echo $this->Form->button('Kreiraj folder', array(
             'type' => 'submit',
             'class' => 'btn margint20',

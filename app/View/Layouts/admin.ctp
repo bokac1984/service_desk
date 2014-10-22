@@ -274,6 +274,7 @@
         echo $this->Html->script('sb-admin-2');
         echo $this->Html->script('scripts');
         echo $this->fetch('scriptBottom');
+        echo $this->element('sql_dump');
     ?>
 
 </body>

@@ -146,20 +146,25 @@ class User extends AppModel {
     
     public function afterSave($created, $options = array()) {
         if ($created) {
-            $folder = new Folder();
+            //$folder = new Folder();
             $folderName = $this->data['User']['username'];
-            if ($folder->create('files'.DS.$folderName)) {
                 $data = array('Direktorijum' => array(
                     'parent_id' => null,
                     'user_id' => $this->getLastInsertId(),
                     'name' => $folderName
                 ));
+                $this->log($data);
                 if ($this->Direktorijum->save($data)) {
                     $this->log('Folder uspjesno kreiran');
+                } else {
+                    $this->log($this->Direktorijum->validationErrors);
+                    $this->log('Nece da sacuva korisnika u bazi');
                 }
-            } else {
-                $this->log('Folder nije moguce bilo kreirati');
-            }
+//            if ($folder->create('files'.DS.$folderName)) {
+//   
+//            } else {
+//                $this->log('Folder nije moguce bilo kreirati');
+//            }
         }
         
         parent::afterSave($created, $options);

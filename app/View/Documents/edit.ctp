@@ -1,26 +1,46 @@
 <div class="documents form">
-<?php echo $this->Form->create('Document'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Document'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
+    <?php
+    echo $this->Form->create('Document', array(
+        'plugin' => null,
+        'controller' => 'documents',
+        'action' => 'edit',
+        'class' => 'form',
+        'method' => 'post'
+    ));
+    $this->Form->inputDefaults(array(
+        'error' => array(
+            'attributes' => array(
+                'wrap' => 'div',
+                'class' => 'label label-warning'
+            )
+        ),
+        'div' => 'form-group col-lg-3'
+            )
+    );
+    ?>
+    <fieldset>
+        <legend><?php echo __('Dodijeli korisnicima'); ?></legend>
+        <?php
+        echo $this->Form->input('id', array(
+            'type' => 'hidden',
+        ));
+        echo $this->Form->input('User', array(
+            'label' => 'Korisnici',
+            'class' => 'form-control',
+            'size' => 15,
+        ));
+		
+       /* echo $this->Form->input('id');
 		echo $this->Form->input('name');
 		echo $this->Form->input('size');
 		echo $this->Form->input('Direktorijum');
-		echo $this->Form->input('User');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Document.id')), array(), __('Are you sure you want to delete # %s?', $this->Form->value('Document.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Documents'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Direktorijums'), array('controller' => 'direktorijums', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Direktorijum'), array('controller' => 'direktorijums', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-	</ul>
+		echo $this->Form->input('User');*/
+        echo $this->Form->button('Spasi promjene', array(
+            'type' => 'submit',
+            'class' => 'btn margint20',
+            'id' => 'create-folder'
+        ));
+        ?>
+    </fieldset>
+    <?php echo $this->Form->end(); ?>
 </div>

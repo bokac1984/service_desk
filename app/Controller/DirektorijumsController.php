@@ -27,14 +27,24 @@ class DirektorijumsController extends AppController {
      * @return void
      */
     public function index() {
-        $this->Direktorijum->recursive = 0;
+        $this->Direktorijum->recursive = 2;
         $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
         if ($id === 0) {
             throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
         }
-        $this->set('direktorijums', $this->Paginator->paginate('Direktorijum', array(
-                    'Direktorijum.user_id' => $this->Auth->user('id'),
-                    'Direktorijum.parent_id' => $id,
+        
+        $options = array(
+            'conditions' => array(
+                'Direktorijum.user_id' => $this->Auth->user('id'),
+                'Direktorijum.parent_id' => $id,
+                ),
+            );
+        $dir = $this->Direktorijum->find('all', $options);
+        $this->set('direktorijums', $dir);
+        $this->set('files', $this->Direktorijum->Document->find('all', array(
+            'conditions' => array(
+                'Document.id' => $id
+            )       
         )));
     }
 
@@ -66,15 +76,6 @@ class DirektorijumsController extends AppController {
             $this->request->data[$this->Direktorijum->name]['user_id'] = $this->Auth->user('id');
             $this->Direktorijum->create();
 
-            if ($id === null) {
-                $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
-                if ($id === 0) {
-                    throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
-                }
-            }
-            
-            $this->request->data[$this->Direktorijum->name]['parent_id'] = $id;
-
             if ($this->Direktorijum->save($this->request->data)) {
                 $this->Session->setFlash(__('Folder uspjesno kreiran.'), 'flashSuccess');
                 return $this->redirect(array('action' => 'index'));
@@ -88,6 +89,15 @@ class DirektorijumsController extends AppController {
                 'ParentDirektorijum.user_id' => $this->Auth->user('id')
             )
         ));
+        
+        if ($id === null) {
+            $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
+            if ($id === 0) {
+                throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
+            }
+        }
+
+        $this->request->data[$this->Direktorijum->name]['parent_id'] = $id;
         $this->set(compact('parentDirektorijums'));
     }
 

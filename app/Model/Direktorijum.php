@@ -39,8 +39,8 @@ class Direktorijum extends AppModel {
                 'message' => 'Postoji vec takav folder'
             ),
             'maxLength' => array(
-                'rule' => array('maxLength', 8),
-                'message' => 'Najvise 8 znakova'
+                'rule' => array('maxLength', 15),
+                'message' => 'Najvise 15 znakova'
             ),
         ),
     );
@@ -154,7 +154,8 @@ class Direktorijum extends AppModel {
     public function getParentDirId($currentId = null) {
         if ($currentId) {
             $parent = $this->getParentNode($currentId);
-            if (!empty($parent)) {
+            //debug($parent);exit();
+            if (!empty($parent['Direktorijum']['parent_id'])) {
                 return $parent['Direktorijum']['id'];
             }
         }
@@ -180,6 +181,7 @@ class Direktorijum extends AppModel {
                 'Direktorijum.id',
             )
         ));
+        //debug($data);exit();
         if (!empty($data)) {
             return $data[$this->name]['id'];
         }
@@ -228,15 +230,16 @@ class Direktorijum extends AppModel {
         return parent::beforeSave($options);
     }
     
-    public function afterDelete() {
+    public function beforeDelete($cascade = true) {
         $path = $this->root . $this->getFolderPath($this->id);
+        
         $folder = new Folder($path);
         if (!is_null($folder->path)) {
             $folder->delete();
         } else {
             return false;
         }
-        parent::afterDelete();
+        parent::beforeDelete($cascade);
     }
     
     /**
@@ -247,6 +250,7 @@ class Direktorijum extends AppModel {
      */
     public function getFolderPath($parentId = null) {
         $data = $this->getPath($parentId, array('Direktorijum.name'));
+        
         $path = DS;
         
         if (!$parentId) {

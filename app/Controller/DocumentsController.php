@@ -37,11 +37,18 @@ class DocumentsController extends AppController {
      * @return void
      */
     public function view($id = null) {
-        if (!$this->Document->exists($id)) {
-            throw new NotFoundException(__('Invalid document'));
-        }
-        $options = array('conditions' => array('Document.' . $this->Document->primaryKey => $id));
-        $this->set('document', $this->Document->find('first', $options));
+        $file = $this->Document->find('first', array(
+            'conditions' => array(
+                'Document.id' => $id
+            )
+        ));
+        $this->response->file(
+            $file['Document']['path'],
+            array('download' => true, 'name' => $file['Document']['name'])
+        );
+        // Return response object to prevent controller from trying to render
+        // a view
+        return $this->response;
     }
 
     /**
@@ -52,15 +59,24 @@ class DocumentsController extends AppController {
     public function add($id = null) {
         if ($this->request->is('post')) {
             $this->Document->create();
-            //debug($this->request->data);exit();
+            $this->request->data['Document']['user_id'] = $this->Auth->user('id');
+            
+
+            debug($this->request->data);exit();
             if ($this->Document->saveAll($this->request->data)) {
                 $this->Session->setFlash(__('The document has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('controller' => 'direktorijums', 'action' => 'index'));
             } else {
+                debug($this->Document->validationErrors);
                 $this->Session->setFlash(__('The document could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('users'));
+        if ($id !== null) {
+            $this->request->data['Direktorijum']['id'] = $id;
+        } else {
+            $this->request->data['Direktorijum']['id'] = $this->Document->Direktorijum->getUserRootDirId($this->Auth->user('id'));
+        }
+        $this->set(compact('user_id'));
     }
 
     /**
@@ -75,9 +91,10 @@ class DocumentsController extends AppController {
             throw new NotFoundException(__('Invalid document'));
         }
         if ($this->request->is(array('post', 'put'))) {
+            debug($this->request->data);exit();
             if ($this->Document->save($this->request->data)) {
                 $this->Session->setFlash(__('The document has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('controller' => 'direktorijums', 'action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The document could not be saved. Please, try again.'));
             }

@@ -1,12 +1,13 @@
+<?php debug($direktorijums); ?>
 <?php if ($direktorijums): ?>
     <div class="direktorijums index">
         <h2><?php echo __('Lista korisnickih foldera'); ?></h2>
         <table cellpadding="0" cellspacing="0" class="table table-hover">
             <thead>
                 <tr>
-                    <th><?php echo $this->Paginator->sort('name', 'Naziv'); ?></th>
-                    <th><?php echo $this->Paginator->sort('created', 'Kreiran'); ?></th>
-                    <th><?php echo $this->Paginator->sort('modified', 'Modifikovan'); ?></th>
+                <th><?php echo __('Naziv'); ?></th>
+                <th><?php echo __('Kreiran'); ?></th>
+                <th><?php echo __('Modifikovan'); ?></th>
                     <th class="actions"><?php echo __('Actions'); ?></th>
                 </tr>
             </thead>
@@ -22,6 +23,23 @@
                         </td>
                     </tr>
                 <?php endforeach; ?>
+            <?php if (!empty($direktorijum['ParentDirektorijum']['Document'])): ?>
+                <?php foreach ($direktorijum['ParentDirektorijum']['Document'] as $document): ?>
+                    <tr>
+                        <td><?php echo $this->Html->link(__($document['name']), array('controller' => 'documents', 'action' => 'view', $document['id'])); ?></td>
+                        <td><?php echo $document['created']; ?></td>
+                        <td><?php echo $document['modified']; ?></td>
+                        <td class="actions">
+                            
+                            <?php echo $this->Html->link(__('View'), array('controller' => 'documents', 'action' => 'view', $document['id'])); ?>
+                            <?php if ($groupId == 1): ?>
+                            <?php echo $this->Html->link(__('Edit'), array('controller' => 'documents', 'action' => 'edit', $document['id'])); ?>
+                            <?php echo $this->Form->postLink(__('Delete'), array('controller' => 'documents', 'action' => 'delete', $document['id']), array(), __('Are you sure you want to delete # %s?', $document['id'])); ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>

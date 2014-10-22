@@ -43,16 +43,5 @@
 	</div>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Groups'), array('controller' => 'groups', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Group'), array('controller' => 'groups', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Service Requests'), array('controller' => 'service_requests', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Service Request'), array('controller' => 'service_requests', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Service Requests Hs'), array('controller' => 'service_requests_hs', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Service Requests H'), array('controller' => 'service_requests_hs', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Solvers'), array('controller' => 'solvers', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Solver'), array('controller' => 'solvers', 'action' => 'add')); ?> </li>
-	</ul>
+<?php echo $this->Html->link(__('New User'), array('action' => 'add'),array('class' => 'btn btn-primary')); ?>
 </div>

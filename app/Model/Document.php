@@ -9,8 +9,9 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Document extends AppModel {
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
-
+    
+    public $actsAs = array('Uploadable');
+    
     /**
      * hasAndBelongsToMany associations
      *
@@ -48,5 +49,22 @@ class Document extends AppModel {
     public function saveFileInfo() {
         
     }
+    
+    
+//    public function beforeSave($options = array()) {
+//        debug($this->data)
+//        ;
+//        $data = array(
+//            'Document' => array(
+//                'id' => $this->id
+//            )
+//        );
+//        $this->Direktorijum->save($data);
+//        foreach ($this->data['User'] as $user) {
+//            debug($user);
+//        }
+//        exit();
+//        parent::beforeSave($options);
+//    }
 
 }

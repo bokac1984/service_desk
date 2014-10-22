@@ -21,6 +21,7 @@
     <fieldset>
         <legend><?php echo __('Add Document'); ?></legend>
         <?php
+        echo $this->Form->input('Direktorijum.id', array('type' => 'hidden'));
         echo $this->Form->input('path.', array('type' => 'file', 'multiple'));
         echo $this->Form->button('Upload', array(
             'type' => 'submit',
@@ -30,15 +31,4 @@
         ?>
     </fieldset>
     <?php echo $this->Form->end(); ?>
-</div>
-<div class="actions">
-    <h3><?php echo __('Actions'); ?></h3>
-    <ul>
-
-        <li><?php echo $this->Html->link(__('List Documents'), array('action' => 'index')); ?></li>
-        <li><?php echo $this->Html->link(__('List Direktorijums'), array('controller' => 'direktorijums', 'action' => 'index')); ?> </li>
-        <li><?php echo $this->Html->link(__('New Direktorijum'), array('controller' => 'direktorijums', 'action' => 'add')); ?> </li>
-        <li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-        <li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-    </ul>
 </div>

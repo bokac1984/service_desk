@@ -1,3 +1,4 @@
+<?php //debug($direktorijum); ?>
 <div class="direktorijums view">
     <h2><?php echo __($direktorijum['Direktorijum']['name']); ?></h2>
     <dl>
@@ -46,7 +47,7 @@
             <?php if (!empty($direktorijum['Document'])): ?>
                 <?php foreach ($direktorijum['Document'] as $document): ?>
                     <tr>
-                        <td><?php echo $document['name']; ?></td>
+                        <td><?php echo $this->Html->link(__($document['name']), array('controller' => 'documents', 'action' => 'view', $document['id'])); ?></td>
                         <td><?php echo $document['created']; ?></td>
                         <td><?php echo $document['modified']; ?></td>
                         <td class="actions">
