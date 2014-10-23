@@ -4,6 +4,8 @@ App::uses('AppController', 'Controller');
 
 /**
  * Documents Controller
+ * 
+ * @property Document $Document Model za ovaj kontroler
  *
  */
 class DocumentsController extends AppController {
@@ -53,30 +55,32 @@ class DocumentsController extends AppController {
 
     /**
      * add method
+     * 
+     * @param string $id
      *
      * @return void
      */
     public function add($id = null) {
         if ($this->request->is('post')) {
             $this->Document->create();
-            $this->request->data['Document']['user_id'] = $this->Auth->user('id');
             
-
-            debug($this->request->data);exit();
             if ($this->Document->saveAll($this->request->data)) {
-                $this->Session->setFlash(__('The document has been saved.'));
-                return $this->redirect(array('controller' => 'direktorijums', 'action' => 'index'));
+                $this->Session->setFlash(__('Uspješno ste dodali fajl.', 'flashSuccess'));
+                if ($this->request->data['Direktorijum']['Direktorijum'] === null) {
+                    return $this->redirect(array('controller' => 'direktorijums', 'action' => 'index'));
+                } else {
+                    return $this->redirect(array('controller' => 'direktorijums', 'action' => 'view', $this->request->data['Direktorijum']['Direktorijum']));
+                }
             } else {
                 debug($this->Document->validationErrors);
-                $this->Session->setFlash(__('The document could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Nije moguće sačuvati fajl.', 'flashError'));
             }
         }
-        if ($id !== null) {
-            $this->request->data['Direktorijum']['id'] = $id;
-        } else {
-            $this->request->data['Direktorijum']['id'] = $this->Document->Direktorijum->getUserRootDirId($this->Auth->user('id'));
-        }
-        $this->set(compact('user_id'));
+        
+        $user_id = $this->Auth->user('id');
+        $dirId = $id !== null ? $id : $this->Document->Direktorijum->getUserRootDirId($user_id);
+        
+        $this->set(compact('user_id', 'dirId'));
     }
 
     /**
@@ -91,9 +95,18 @@ class DocumentsController extends AppController {
             throw new NotFoundException(__('Invalid document'));
         }
         if ($this->request->is(array('post', 'put'))) {
+            if (!in_array($this->request->data['User']['User'], $this->Auth->user('id'))) {
+                array_push($this->request->data['User']['User'], $this->Auth->user('id'));
+            }
+            
+            $folderIDs = $this->Document->Direktorijum->getFolderIdsForUsers($this->request->data['User']['User']);
+            if ($folderIDs) {
+                $this->request->data['Direktorijum'] = $folderIDs;
+            }
+            
             debug($this->request->data);exit();
             if ($this->Document->save($this->request->data)) {
-                $this->Session->setFlash(__('The document has been saved.'));
+                $this->Session->setFlash(__('Uspjesno ste uredili fajl'), 'flashSuccess');
                 return $this->redirect(array('controller' => 'direktorijums', 'action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The document could not be saved. Please, try again.'));

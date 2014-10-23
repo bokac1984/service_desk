@@ -18,7 +18,7 @@ class LinkHelper extends AppHelper {
      * @param array options Options to pass to HTML link method
      * @return type
      */
-    public function cLink($title = '', $url = '/pages/index', $classes = 'fa ', $options = array()) {
+    public function cLink($title = '&nbsp;', $url = '/pages/index', $classes = 'fa ', $options = array()) {
         $defaults = array('escape' => false);
         $mr = am($defaults, $options);
         return $this->Html->link('<i class="'.$classes.'"></i> '.$title, $url, $mr);

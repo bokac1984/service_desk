@@ -1,4 +1,4 @@
-<?php debug($direktorijums); ?>
+<?php //debug($direktorijums); ?>
 <?php if ($direktorijums): ?>
     <div class="direktorijums index">
         <h2><?php echo __('Lista korisnickih foldera'); ?></h2>
@@ -12,28 +12,28 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($direktorijums as $direktorijum): ?>
+                <?php foreach ($direktorijums[0]['ChildDirektorijum'] as $direktorijum): ?>
                     <tr>
-                        <td><?php echo $this->Html->link(__($direktorijum['Direktorijum']['name']), array('action' => 'view', $direktorijum['Direktorijum']['id'])); ?>&nbsp;</td>
-                        <td><?php echo h($direktorijum['Direktorijum']['created']); ?>&nbsp;</td>
-                        <td><?php echo h($direktorijum['Direktorijum']['modified']); ?>&nbsp;</td>
+                        <td><?php echo $this->Link->cLink(__($direktorijum['name']), array('action' => 'view', $direktorijum['id']), 'fa fa-folder-open fa-fw'); ?></td>                      
+                        <td><?php echo h($direktorijum['created']); ?>&nbsp;</td>
+                        <td><?php echo h($direktorijum['modified']); ?>&nbsp;</td>
                         <td class="actions">
-                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $direktorijum['Direktorijum']['id'])); ?>
-                            <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $direktorijum['Direktorijum']['id']), array(), __('Are you sure you want to delete # %s?', $direktorijum['Direktorijum']['id'])); ?>
+                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $direktorijum['id'])); ?>
+                            <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $direktorijum['id']), array(), __('Are you sure you want to delete # %s?', $direktorijum['id'])); ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            <?php if (!empty($direktorijum['ParentDirektorijum']['Document'])): ?>
-                <?php foreach ($direktorijum['ParentDirektorijum']['Document'] as $document): ?>
+            <?php if (!empty($direktorijums[0]['Document'])): ?>
+                <?php foreach ($direktorijums[0]['Document'] as $document): ?>
                     <tr>
-                        <td><?php echo $this->Html->link(__($document['name']), array('controller' => 'documents', 'action' => 'view', $document['id'])); ?></td>
+                        <td><?php echo $this->Link->cLink(__($document['name']), array('controller' => 'documents', 'action' => 'view', $document['id']), 'fa fa-file fa-fw'); ?></td>                      
                         <td><?php echo $document['created']; ?></td>
                         <td><?php echo $document['modified']; ?></td>
                         <td class="actions">
                             
-                            <?php echo $this->Html->link(__('View'), array('controller' => 'documents', 'action' => 'view', $document['id'])); ?>
+                            <?php echo $this->Link->cLink('', array('controller' => 'documents', 'action' => 'view', $document['id']), 'fa fa-download fa-fw', array('title' => 'Skini'))?>
                             <?php if ($groupId == 1): ?>
-                            <?php echo $this->Html->link(__('Edit'), array('controller' => 'documents', 'action' => 'edit', $document['id'])); ?>
+                            <?php echo $this->Link->cLink('', array('controller' => 'documents', 'action' => 'edit', $document['id']), 'fa fa-edit fa-fw', array('title' => 'Uredi')); ?>
                             <?php echo $this->Form->postLink(__('Delete'), array('controller' => 'documents', 'action' => 'delete', $document['id']), array(), __('Are you sure you want to delete # %s?', $document['id'])); ?>
                             <?php endif; ?>
                         </td>

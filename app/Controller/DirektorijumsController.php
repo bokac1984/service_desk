@@ -27,7 +27,7 @@ class DirektorijumsController extends AppController {
      * @return void
      */
     public function index() {
-        $this->Direktorijum->recursive = 2;
+        //$this->Direktorijum->recursive = 1;
         $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
         if ($id === 0) {
             throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
@@ -36,16 +36,13 @@ class DirektorijumsController extends AppController {
         $options = array(
             'conditions' => array(
                 'Direktorijum.user_id' => $this->Auth->user('id'),
-                'Direktorijum.parent_id' => $id,
+                'Direktorijum.parent_id' => null,
                 ),
-            );
+            'fields' => array(
+                'Direktorijum.id'
+            ));
         $dir = $this->Direktorijum->find('all', $options);
         $this->set('direktorijums', $dir);
-        $this->set('files', $this->Direktorijum->Document->find('all', array(
-            'conditions' => array(
-                'Document.id' => $id
-            )       
-        )));
     }
 
     /**
@@ -59,7 +56,10 @@ class DirektorijumsController extends AppController {
         if (!$this->Direktorijum->exists($id)) {
             throw new NotFoundException(__('Invalid direktorijum'));
         }
-        $options = array('conditions' => array('Direktorijum.' . $this->Direktorijum->primaryKey => $id));
+        $options = array(
+            'conditions' => array(
+                'Direktorijum.' . $this->Direktorijum->primaryKey => $id
+        ));
         $dir = $this->Direktorijum->find('first', $options);
 
         $this->set('direktorijum', $this->Direktorijum->createParentLinkFolder($dir));
@@ -73,32 +73,24 @@ class DirektorijumsController extends AppController {
      */
     public function add($id = null) {
         if ($this->request->is('post')) {
-            $this->request->data[$this->Direktorijum->name]['user_id'] = $this->Auth->user('id');
             $this->Direktorijum->create();
-
+            
             if ($this->Direktorijum->save($this->request->data)) {
                 $this->Session->setFlash(__('Folder uspjesno kreiran.'), 'flashSuccess');
-                return $this->redirect(array('action' => 'index'));
+                
+                if ($this->request->data['Direktorijum']['parent_id'] === null) {
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    return $this->redirect(array('action' => 'view', $this->request->data['Direktorijum']['parent_id']));
+                }
+
             } else {
                 $this->Session->setFlash(__('Nije moguce kreirati folder, pokusajte ponovo.'), 'flashError');
             }
         }
-
-        $parentDirektorijums = $this->Direktorijum->ParentDirektorijum->find('list', array(
-            'conditions' => array(
-                'ParentDirektorijum.user_id' => $this->Auth->user('id')
-            )
-        ));
         
-        if ($id === null) {
-            $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
-            if ($id === 0) {
-                throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
-            }
-        }
-
-        $this->request->data[$this->Direktorijum->name]['parent_id'] = $id;
-        $this->set(compact('parentDirektorijums'));
+        $this->set('parentId', $id);
+        $this->set('userId', $this->Auth->user('id'));
     }
 
     /**
@@ -124,6 +116,7 @@ class DirektorijumsController extends AppController {
             $this->request->data = $this->Direktorijum->find('first', $options);
         }
         $users = $this->Direktorijum->User->find('list');
+        debug($users);
         $parentDirektorijums = $this->Direktorijum->ParentDirektorijum->find('list');
         $documents = $this->Direktorijum->Document->find('list');
         $this->set(compact('users', 'parentDirektorijums', 'documents'));

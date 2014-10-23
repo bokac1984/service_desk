@@ -19,9 +19,10 @@
     ));
     ?>
     <fieldset>
-        <legend><?php echo __('Add Document'); ?></legend>
+        <legend><?php echo __('Dodaj novi fajl'); ?></legend>
         <?php
-        echo $this->Form->input('Direktorijum.id', array('type' => 'hidden'));
+        echo $this->Form->input('Direktorijum', array('type' => 'hidden', 'value' => $dirId));
+        echo $this->Form->input('User', array('type' => 'hidden', 'value' => $user_id));
         echo $this->Form->input('path.', array('type' => 'file', 'multiple'));
         echo $this->Form->button('Upload', array(
             'type' => 'submit',

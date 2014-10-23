@@ -25,10 +25,10 @@
                             if ($childDirektorijum['id'] === 0) {
                                 echo $this->Html->link(__('...'), array('controller' => 'direktorijums', 'action' => 'index'));
                             } else {
-                                echo $this->Html->link(__($childDirektorijum['name']), array('controller' => 'direktorijums', 'action' => 'view', $childDirektorijum['id']));
+                                echo $this->Html->link(__($childDirektorijum['name']), array('controller' => 'direktorijums', 'action' => 'view', $childDirektorijum['id']), array('escape' => false));
                             }
                         } else {
-                            echo $this->Html->link(__($childDirektorijum['name']), array('controller' => 'direktorijums', 'action' => 'view', $childDirektorijum['id']));
+                            echo $this->Link->cLink(__($childDirektorijum['name']), array('controller' => 'direktorijums', 'action' => 'view', $childDirektorijum['id']), 'fa fa-folder-open fa-fw');
                         }
                         ?>
                     </td>
@@ -47,7 +47,7 @@
             <?php if (!empty($direktorijum['Document'])): ?>
                 <?php foreach ($direktorijum['Document'] as $document): ?>
                     <tr>
-                        <td><?php echo $this->Html->link(__($document['name']), array('controller' => 'documents', 'action' => 'view', $document['id'])); ?></td>
+                        <td><?php echo $this->Link->cLink(__($document['name']), array('controller' => 'documents', 'action' => 'view', $document['id']), 'fa fa-file fa-fw'); ?></td>
                         <td><?php echo $document['created']; ?></td>
                         <td><?php echo $document['modified']; ?></td>
                         <td class="actions">

@@ -265,5 +265,36 @@ class Direktorijum extends AppModel {
         
         return $path;
     }
+    
+    /**
+     * Vraca sve ID foldera za korisnike iz usersID niza.
+     * 
+     * @param array $userIds
+     * @return array
+     */
+    public function getFolderIdsForUsers(array $userIds = array()) {
+        $users = $this->find('list', array(
+            'conditions' => array(
+                'Direktorijum.user_id' => $userIds,
+                'Direktorijum.parent_id' => null
+            ),
+            'recursive' => false,
+            'fields' => array(
+                'Direktorijum.id'
+            )
+        ));
+        
+        $direktorijums = array(
+            'Direktorijum' => array()
+        );
+        
+        if (!empty($users)) {
+            foreach ($users as $user) {
+                $direktorijums['Direktorijum'][] = $user;
+            }
+        }
+        
+        return $direktorijums;
+    }
 
 }

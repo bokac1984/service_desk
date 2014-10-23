@@ -15,7 +15,7 @@ class UploadableBehavior extends ModelBehavior {
         
         if (!empty($model->data[$model->alias]['path'])) {
                     if (!$this->uploadFiles($model, $model->data[$model->alias])) {
-            $model->data['User']['id'] = $model->data[$model->alias]['user_id'];
+            //$model->data['User']['id'] = $model->data[$model->alias]['user_id'];
             
         }
         }
@@ -26,7 +26,7 @@ class UploadableBehavior extends ModelBehavior {
     
     public function uploadFiles(\Model $model, $files = array()) {
         $error = false;
-        $path = $model->root . $model->Direktorijum->getFolderPath($model->data['Direktorijum']['id']);
+        $path = $model->root . $model->Direktorijum->getFolderPath($model->data['Direktorijum']['Direktorijum']);
 
         foreach($files['path'] as $file) {  
             $filePath = $path . $file['name'];
