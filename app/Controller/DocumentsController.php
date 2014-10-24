@@ -104,7 +104,7 @@ class DocumentsController extends AppController {
                 $this->request->data['Direktorijum'] = $folderIDs;
             }
             
-            debug($this->request->data);exit();
+            //debug($this->request->data);exit();
             if ($this->Document->save($this->request->data)) {
                 $this->Session->setFlash(__('Uspjesno ste uredili fajl'), 'flashSuccess');
                 return $this->redirect(array('controller' => 'direktorijums', 'action' => 'index'));

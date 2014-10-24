@@ -116,7 +116,7 @@ class DirektorijumsController extends AppController {
             $this->request->data = $this->Direktorijum->find('first', $options);
         }
         $users = $this->Direktorijum->User->find('list');
-        debug($users);
+        
         $parentDirektorijums = $this->Direktorijum->ParentDirektorijum->find('list');
         $documents = $this->Direktorijum->Document->find('list');
         $this->set(compact('users', 'parentDirektorijums', 'documents'));
