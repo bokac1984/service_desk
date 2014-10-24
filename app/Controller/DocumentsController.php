@@ -95,7 +95,7 @@ class DocumentsController extends AppController {
             throw new NotFoundException(__('Invalid document'));
         }
         if ($this->request->is(array('post', 'put'))) {
-            if (!in_array($this->request->data['User']['User'], $this->Auth->user('id'))) {
+            if (!in_array($this->Auth->user('id'), $this->request->data['User']['User'])) {
                 array_push($this->request->data['User']['User'], $this->Auth->user('id'));
             }
             
@@ -109,7 +109,7 @@ class DocumentsController extends AppController {
                 $this->Session->setFlash(__('Uspjesno ste uredili fajl'), 'flashSuccess');
                 return $this->redirect(array('controller' => 'direktorijums', 'action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The document could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Nije moguce spasiti promjene.'), 'flashError');
             }
         } else {
             $options = array('conditions' => array('Document.' . $this->Document->primaryKey => $id));
