@@ -97,8 +97,8 @@
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Task 1</strong>
-                                        <span class="pull-right text-muted">40% Complete</span>
+                                        <strong>Trajanje sesije</strong>
+                                        <span class="pull-right text-muted"><?php echo $this->Time->nice($this->Session->read('Config.time')); ?></span>
                                     </p>
                                     <div class="progress progress-striped active">
                                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">

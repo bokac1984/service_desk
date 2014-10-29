@@ -5,31 +5,31 @@ msgid "February"
 msgstr "Februar"
 
 msgid "March"
-msgstr "März"
+msgstr "Mart"
 
 msgid "April"
 msgstr "April"
 
 msgid "May"
-msgstr "Mai"
+msgstr "Maj"
 
 msgid "June"
-msgstr "Juni"
+msgstr "Jun"
 
 msgid "July"
-msgstr "Juli"
+msgstr "Jul"
 
 msgid "August"
-msgstr "August"
+msgstr "Avgust"
 
 msgid "September"
-msgstr "September"
+msgstr "Septembar"
 
 msgid "October"
-msgstr "Oktober"
+msgstr "Oktobar"
 
 msgid "November"
-msgstr "November"
+msgstr "Novembar"
 
 msgid "December"
-msgstr "Dezember"
+msgstr "Decembar"

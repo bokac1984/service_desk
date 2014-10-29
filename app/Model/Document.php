@@ -51,20 +51,31 @@ class Document extends AppModel {
     }
     
     
-//    public function beforeSave($options = array()) {
-//        debug($this->data)
-//        ;
-//        $data = array(
-//            'Document' => array(
-//                'id' => $this->id
-//            )
-//        );
-//        $this->Direktorijum->save($data);
-//        foreach ($this->data['User'] as $user) {
-//            debug($user);
-//        }
-//        exit();
-//        parent::beforeSave($options);
-//    }
+    /**
+     * Provjeravamo da li je dokument korisnikov
+     * 
+     * @param type $user
+     * @param type $id
+     * @return type
+     */
+    public function isOwnedByUser($user, $id) {
+        $data = $this->find('first', array(
+            'joins' => array(
+                array(
+                    'table' => 'users_documents',
+                    'alias' => 'UsersDocument',
+                    'type' => 'INNER',
+                    'conditions' => array(
+                        'UsersDocument.user_id' => $user['id'],
+                        'UsersDocument.document_id = Document.id'
+                    )
+                )
+            ),
+            'conditions' => array( 'Document.id' => $id ),
+            'fields' => array( 'UsersDocument.user_id' ),
+            'recursive' => '-1'
+        ));
+        return $data['UsersDocument']['user_id'] !== null ? true : false;
+    }
 
 }

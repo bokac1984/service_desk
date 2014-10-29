@@ -21,6 +21,9 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+    
+    public $actsAs = array('Containable');
+    
     public $root;
     
     public function __construct($id = false, $table = null, $ds = null) {

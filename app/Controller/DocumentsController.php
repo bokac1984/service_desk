@@ -18,7 +18,18 @@ class DocumentsController extends AppController {
     public $components = array('Paginator');
 
     public function isAuthorized($user) {
-        parent::isAuthorized($user);
+        if ($this->action === 'add') {
+            return true;
+        }
+        if (in_array($this->action, array('edit', 'delete'))) {
+            return $this->Document->isOwnedByUser($user, $this->passedArgs[0]);
+        }
+        
+        return parent::isAuthorized($user);
+    }
+    
+    public function beforeFilter() {
+        return parent::beforeFilter();
     }
 
     /**
@@ -128,17 +139,19 @@ class DocumentsController extends AppController {
      * @return void
      */
     public function delete($id = null) {
-        $this->Document->id = $id;
-        if (!$this->Document->exists()) {
-            throw new NotFoundException(__('Invalid document'));
-        }
-        $this->request->allowMethod('post', 'delete');
-        if ($this->Document->delete()) {
-            $this->Session->setFlash(__('The document has been deleted.'));
-        } else {
-            $this->Session->setFlash(__('The document could not be deleted. Please, try again.'));
-        }
-        return $this->redirect(array('action' => 'index'));
+//        $this->Document->id = $id;
+//        if (!$this->Document->exists()) {
+//            throw new NotFoundException(__('Invalid document'));
+//        }
+//        $this->request->allowMethod('post', 'delete');
+//        if ($this->Document->delete()) {
+//            $this->Session->setFlash(__('The document has been deleted.'));
+//        } else {
+//            $this->Session->setFlash(__('The document could not be deleted. Please, try again.'));
+//        }
+//        return $this->redirect(array('action' => 'index'));
+        $this->Document->DirektorijumsDocument->deleteAll(array('DirektorijumsDocument.document_id' => $this->Auth->user('id')), false);
+        debug($this->Document->UsersDocument->deleteAll(array('UsersDocument.user_id' => $this->Auth->user('id')), false));
     }
 
 }

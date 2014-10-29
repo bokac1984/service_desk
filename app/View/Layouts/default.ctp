@@ -12,6 +12,7 @@
 
 		echo $this->Html->css('bootstrap.min');
                 echo $this->Html->css('dashboard');
+                echo $this->Html->css('/font-awesome-4.1.0/css/font-awesome.min');
                 echo $this->Html->css('custom');
 
 		echo $this->fetch('meta');
@@ -60,6 +61,21 @@
         <div class="container">
             <?php echo $this->Session->flash(); ?>
             <?php echo $this->Session->flash('auth'); ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <?php
+                    echo $this->Html->getCrumbList(
+                            array(
+                        'class' => 'breadcrumb',
+                            ), array(
+                        'text' => 'Početna',
+                        'url' => '/',
+                        'escape' => false
+                            )
+                    );
+                    ?>
+                </div>
+            </div>
             <?php echo $this->fetch('content'); ?>
         </div>
 
@@ -71,6 +87,7 @@
             echo $this->Html->script('/js/lib/bootstrap.min');
             echo $this->Html->script('/js/scripts');
             echo $this->fetch('scriptBottom');
+            echo $this->element('sql_dump');
         ?>
     </body>
 </html>

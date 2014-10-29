@@ -9,6 +9,10 @@ App::uses('AppController', 'Controller');
  * @property PaginatorComponent $Paginator
  */
 class DirektorijumsController extends AppController {
+    
+    public function beforeFilter() {
+        return parent::beforeFilter();
+    }
 
     /**
      * Components
@@ -18,6 +22,9 @@ class DirektorijumsController extends AppController {
     public $components = array('Paginator');
 
     public function isAuthorized($user) {
+        if ($this->Direktorijum->isOwnedBy($user)) {
+            return true;
+        }
         return parent::isAuthorized($user);
     }
 
@@ -27,7 +34,6 @@ class DirektorijumsController extends AppController {
      * @return void
      */
     public function index() {
-        //$this->Direktorijum->recursive = 1;
         $id = $this->Direktorijum->getUserRootDirId($this->Auth->user('id'));
         if ($id === 0) {
             throw new NotFoundException(__('Nemate vas root folder kreiran. Kontaktirajte administratora.'));
@@ -38,6 +44,17 @@ class DirektorijumsController extends AppController {
                 'Direktorijum.user_id' => $this->Auth->user('id'),
                 'Direktorijum.parent_id' => null,
                 ),
+//            'joins' => array(
+//                array(
+//                    'table' => 'users_documents',
+//                    'alias' => 'UsersDocument',
+//                    'type' => 'LEFT',
+//                    'conditions' => array(
+//                        'UsersDocument.user_id' => $this->Auth->user('id'),
+//                        'UsersDocument.document_id = Document.id'
+//                    )
+//                )
+//            ),
             'fields' => array(
                 'Direktorijum.id'
             ));

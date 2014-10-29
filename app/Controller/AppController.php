@@ -30,7 +30,7 @@ class AppController extends Controller {
         'Auth' => array(
             'authorize' => array(
                 'Controller',
-                'Actions' => array('actionPath' => 'controllers')
+                //'Actions' => array('actionPath' => 'controllers')
             )
         ),
         'Session'
