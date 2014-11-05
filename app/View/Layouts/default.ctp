@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container" style="margin-top: 5px;">
             <?php echo $this->Session->flash(); ?>
             <?php echo $this->Session->flash('auth'); ?>
             <div class="row">

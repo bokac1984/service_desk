@@ -41,24 +41,40 @@ class DirektorijumsController extends AppController {
         
         $options = array(
             'conditions' => array(
-                'Direktorijum.user_id' => $this->Auth->user('id'),
-                'Direktorijum.parent_id' => null,
-                ),
-//            'joins' => array(
-//                array(
-//                    'table' => 'users_documents',
-//                    'alias' => 'UsersDocument',
-//                    'type' => 'LEFT',
-//                    'conditions' => array(
-//                        'UsersDocument.user_id' => $this->Auth->user('id'),
-//                        'UsersDocument.document_id = Document.id'
-//                    )
-//                )
+                'Direktorijum.id' => $id
+            ),
+//            'fields' => array(
+//                'Direktorijum.id'
 //            ),
-            'fields' => array(
-                'Direktorijum.id'
-            ));
+            'recursive' => '1',
+            'joins' => array(
+                array(
+                    'table' => 'users_documents',
+                    'alias' => 'UsersDocument',
+                    'type' => 'LEFT',
+                    'conditions' => array(
+                        'UsersDocument.user_id' => $this->Auth->user('id')
+                    )
+                ),               
+            )
+        );
+//        $this->Direktorijum->id = $id;
+//        debug($this->Direktorijum->find('all', array(
+////            'joins' => array(
+////                array(
+////                    'table' => 'users_documents',
+////                    'alias' => 'UsersDocument',
+////                    'type' => 'INNER',
+////                    'conditions' => array(
+////                        'UsersDocument.user_id' => $this->Auth->user('id'),
+////                        'UsersDocument.document_id = Document.id'
+////                    )
+////                ),               
+////            ),
+//            'recursive' => '-1'
+//        )));
         $dir = $this->Direktorijum->find('all', $options);
+        //debug($dir);
         $this->set('direktorijums', $dir);
     }
 

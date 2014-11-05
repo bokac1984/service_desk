@@ -50,3 +50,15 @@
         </ul>
         <!-- /.nav-second-level -->
     </li>
+    <li>
+        <a href="#"><i class="fa fa-folder fa-fw"></i> Podešavanja<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <?php echo $this->Link->cLink('Kategorije', array('prefix' => null, 'plugin' => null, 'controller' => 'categories', 'action' => 'index'), 'fa fa-folder fa-fw'); ?>
+            </li>
+            <li>
+                <?php echo $this->Link->cLink('Prioriteti', array('prefix' => null, 'plugin' => null, 'controller' => 'direktorijums', 'action' => 'index'), 'fa fa-folder fa-fw'); ?>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>

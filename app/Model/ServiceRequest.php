@@ -122,6 +122,7 @@ class ServiceRequest extends AppModel {
             );
             
             $assignedTo = $this->Category->Solver->find('first', $options);
+            
             if (empty($assignedTo)) {
                 return 1;
             }

@@ -59,6 +59,8 @@ class Document extends AppModel {
      * @return type
      */
     public function isOwnedByUser($user, $id) {
+        debug($user);
+        debug($id);
         $data = $this->find('first', array(
             'joins' => array(
                 array(
@@ -75,6 +77,7 @@ class Document extends AppModel {
             'fields' => array( 'UsersDocument.user_id' ),
             'recursive' => '-1'
         ));
+        //  debug($data);exit();
         return $data['UsersDocument']['user_id'] !== null ? true : false;
     }
 

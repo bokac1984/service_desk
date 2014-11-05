@@ -59,7 +59,15 @@ class SolversController extends AppController {
             }
         }
         $categories = $this->Solver->Category->find('list', array('conditions' => array('Category.parent_id' => null)));
-        $users = $this->Solver->User->find('list');
+        $users = $this->Solver->User->find('list', array(
+            'conditions' => array(
+                'User.group_id' => array(
+                    '3',
+                    '1'
+                )
+            )
+        ));
+        
         $this->set(compact('categories', 'users'));
     }
 

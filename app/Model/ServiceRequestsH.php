@@ -65,7 +65,7 @@ class ServiceRequestsH extends AppModel {
                 'ServiceRequestsH.service_request_id' => $this->data['ServiceRequestsH']['service_request_id']
             ),
         ));
-        debug($seq);exit();
+        //debug($seq);exit();
         if (!empty($seq)) {
             $sekvenca = (int)$seq['ServiceRequestsH']['sekvenca'];
             $this->data['ServiceRequestsH']['sekvenca'] = $sekvenca++;

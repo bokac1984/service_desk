@@ -27,10 +27,16 @@ class ServiceRequestsController extends AppController {
         // The owner 
         if (in_array($this->action, array('edit', 'delete', 'view'))) {
             $id = (int) $this->request->params['pass'][0];
-            return $this->ServiceRequest->isOwnedBy($user);
+            if ($this->ServiceRequest->isOwnedBy($user)) {
+                return true;
+            }
         }
 
         return parent::isAuthorized($user);
+    }
+    
+    public function beforeFilter() {
+        parent::beforeFilter();
     }
     /**
      * index method

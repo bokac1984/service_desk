@@ -1,3 +1,6 @@
+<?php App::uses('CakeNumber', 'Utility');
+// 0 Bytes
+?>
 <div class="documents view">
 <h2><?php echo __('Document'); ?></h2>
 	<dl>
@@ -13,7 +16,7 @@
 		</dd>
 		<dt><?php echo __('Size'); ?></dt>
 		<dd>
-			<?php echo h($document['Document']['size']); ?>
+			<?php echo CakeNumber::toReadableSize(h($document['Document']['size'])); ; ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>

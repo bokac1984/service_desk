@@ -30,7 +30,7 @@ $(document).ready(function () {
         $('#ServiceRequestType').find('option:gt(0)').remove();
         disableDropdowns();
         var id =  $(this).val();
-        
+        console.log(id);
         if (id === '-1') {
             return;
         }
@@ -41,6 +41,7 @@ $(document).ready(function () {
             data: dataObj,
             dataType: "html",
             success: function (data) {
+                console.log(data);
                 if (data) {
                     $('#ServiceRequestChildrenCategory').append(data);
                     $('#ServiceRequestChildrenCategory').removeAttr('disabled');

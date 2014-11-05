@@ -17,6 +17,11 @@ class CategoriesController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Session');
+    
+    public function beforeFilter() {
+        $this->Auth->allow('listChildCategories');
+        parent::beforeFilter();
+    }
 
     /**
      * index method

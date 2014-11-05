@@ -21,7 +21,7 @@ class DocumentsController extends AppController {
         if ($this->action === 'add') {
             return true;
         }
-        if (in_array($this->action, array('edit', 'delete'))) {
+        if (in_array($this->action, array('edit', 'delete', 'view'))) {
             return $this->Document->isOwnedByUser($user, $this->passedArgs[0]);
         }
         
@@ -50,6 +50,19 @@ class DocumentsController extends AppController {
      * @return void
      */
     public function view($id = null) {
+        if (!$this->Document->exists($id)) {
+            throw new NotFoundException(__('Ne postoji fajl'));
+        }
+        $options = array(
+            'conditions' => array(
+                'Document.' . $this->Document->primaryKey => $id
+        ));
+        $document = $this->Document->find('first', $options);
+
+        $this->set(compact('document'));
+    }
+    
+    public function download() {
         $file = $this->Document->find('first', array(
             'conditions' => array(
                 'Document.id' => $id
@@ -74,7 +87,7 @@ class DocumentsController extends AppController {
     public function add($id = null) {
         if ($this->request->is('post')) {
             $this->Document->create();
-            
+            debug($this->request->data);
             if ($this->Document->saveAll($this->request->data)) {
                 $this->Session->setFlash(__('Uspješno ste dodali fajl.', 'flashSuccess'));
                 if ($this->request->data['Direktorijum']['Direktorijum'] === null) {
