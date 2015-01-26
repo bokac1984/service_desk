@@ -18,27 +18,32 @@ if ($serviceRequests):
                     </tr>
                 </thead>
                 <tbody>
-    <?php foreach ($serviceRequests as $serviceRequest): ?>
+                    <?php foreach ($serviceRequests as $serviceRequest): ?>
                         <tr>
                             <td><?php echo h($serviceRequest['ServiceRequest']['id']); ?>&nbsp;</td>
                             <td>
-        <?php echo $this->Html->link($serviceRequest['Status']['naziv'], array('controller' => 'statuses', 'action' => 'view', $serviceRequest['Status']['id'])); ?>
+                                <?php echo $this->Html->link($serviceRequest['Status']['naziv'], array('controller' => 'statuses', 'action' => 'view', $serviceRequest['Status']['id'])); ?>
                             </td>
                             <td>
-        <?php echo $this->Html->link($serviceRequest['Category']['naziv'], array('controller' => 'categories', 'action' => 'view', $serviceRequest['Category']['id'])); ?>
+                                <?php echo $this->Html->link($serviceRequest['Category']['naziv'], array('controller' => 'categories', 'action' => 'view', $serviceRequest['Category']['id'])); ?>
                             </td>
                             <td>
-        <?php echo $this->Html->link($serviceRequest['Priority']['name'], array('controller' => 'priorities', 'action' => 'view', $serviceRequest['Priority']['id'])); ?>
+                                <?php echo $this->Html->link($serviceRequest['Priority']['name'], array('controller' => 'priorities', 'action' => 'view', $serviceRequest['Priority']['id'])); ?>
                             </td>
                             <td><?php echo h($serviceRequest['ServiceRequest']['naziv_zahtjeva']); ?>&nbsp;</td>
                             <td><?php echo __($this->Time->niceShort($serviceRequest['ServiceRequest']['modified'])); ?>&nbsp;</td>
                             <td class="actions">
-                                <?php echo $this->Html->link(__('View'), array('action' => 'view', $serviceRequest['ServiceRequest']['id'])); ?>
-                                <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $serviceRequest['ServiceRequest']['id'])); ?>
-        <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $serviceRequest['ServiceRequest']['id']), array(), __('Are you sure you want to delete # %s?', $serviceRequest['ServiceRequest']['id'])); ?>
+                                <?php echo $this->Link->cLink(__(''), array('action' => 'view', $serviceRequest['ServiceRequest']['id']), 'fa fa-eye fa-fw'); ?>
+                                <?php echo $this->Link->cLink(__(''), array('action' => 'edit', $serviceRequest['ServiceRequest']['id']), 'fa fa-edit fa-fw'); ?>
+                                <?php echo $this->Link->dLink(
+                                        '', 
+                                        array('action' => 'delete', $serviceRequest['ServiceRequest']['id']), 
+                                        'fa fa-trash-o', 
+                                        $serviceRequest['ServiceRequest']['id']
+                                    ); ?>
                             </td>
                         </tr>
-    <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
             <p>
@@ -59,6 +64,6 @@ if ($serviceRequests):
 <?php else : ?>
     <div class="row">
         <h2><?php echo __('Nemate otvorenih tiketa'); ?></h2>
-    <?php echo $this->Html->link(__('Novi tiket'), array('action' => 'add'), array('class' => 'btn btn-primary')); ?>
+        <?php echo $this->Html->link(__('Novi tiket'), array('action' => 'add'), array('class' => 'btn btn-primary')); ?>
     </div>
 <?php endif; ?>

@@ -17,26 +17,10 @@ class ServiceRequestsController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Session');
-
-    public function isAuthorized($user) {
-        // All registered users 
-        if ($this->action === 'add' || $this->action === 'index') {
-            return true;
-        }
-
-        // The owner 
-        if (in_array($this->action, array('edit', 'delete', 'view'))) {
-            $id = (int) $this->request->params['pass'][0];
-            if ($this->ServiceRequest->isOwnedBy($user)) {
-                return true;
-            }
-        }
-
-        return parent::isAuthorized($user);
-    }
     
     public function beforeFilter() {
         parent::beforeFilter();
+        $this->Auth->allow('zabrani');
     }
     /**
      * index method
@@ -65,8 +49,44 @@ class ServiceRequestsController extends AppController {
         if (!$this->ServiceRequest->exists($id)) {
             throw new NotFoundException(__('Invalid service request'));
         }
-        $options = array('conditions' => array('ServiceRequest.' . $this->ServiceRequest->primaryKey => $id),
-            'recursive' => 1);
+        $options = array(
+            'conditions' => array(
+                'ServiceRequest.' . $this->ServiceRequest->primaryKey => $id
+            ),
+            'fields' => array(
+                'opis_zahtjeva', 'naziv_zahtjeva', 'created', 'assigned_to'
+            ),
+            'recursive' => -1,
+            'contain' => array(
+                'Message' => array(
+                    'fields' => array(
+                        'message',
+                        'created',
+                    ),
+                    'User' => array(
+                        'fields' => array(
+                            'username'
+                        )
+                    )
+                ),
+                'Priority' => array(
+                    'fields' => array(
+                        'id', 'name'
+                    )
+                ),
+                'Status' => array(
+                    'fields' => array(
+                        'id', 'naziv'
+                    )
+                ),
+                'Category' => array(
+                    'fields' => array(
+                        'id', 'naziv'
+                    )
+                ),
+                'User'
+            )
+        );
         $serviceRequest = $this->ServiceRequest->find('first', $options);
         $assignedTo = $this->ServiceRequest->User->find('first', array(
             'conditions' => array(
@@ -76,7 +96,7 @@ class ServiceRequestsController extends AppController {
                 'User.id',
                 'User.username'
             ),
-            'recursive' => -1
+            'recursive' => '-1'
             ));
         $serviceRequest['ServiceRequest']['assigned_to'] = $assignedTo['User'];
         $this->set(compact('serviceRequest'));
@@ -101,6 +121,8 @@ class ServiceRequestsController extends AppController {
             ));
             
             $this->request->data = $this->ServiceRequest->prepareDataForSave($this->request->data);
+            
+            
             if ($this->ServiceRequest->validates($this->request->data)) {
                 $this->request->data['ServiceRequest']['status_id'] = $statusObj['Status']['id'];
                 $this->request->data['ServiceRequest']['user_id'] = $this->Session->read('Auth.User.id');
@@ -186,6 +208,20 @@ class ServiceRequestsController extends AppController {
         $priorities = $this->ServiceRequest->Priority->find('list');
         $this->set(compact('statuses', 'users', 'categories', 'priorities'));
     }
+    
+    public function update() {
+        if ($this->request->is(array('post', 'put'))) {
+            if ($this->ServiceRequest->save($this->request->data)) {
+                $this->Session->setFlash(__('Uspjesno sacuvano'), 'flashSuccess');
+                return $this->redirect(array('action' => 'view', $this->request->data['ServiceRequest']['id']));
+            } else {
+                $this->Session->setFlash(__('The service request could not be saved. Please, try again.'));
+            }
+        } else {
+            $options = array('conditions' => array('ServiceRequest.' . $this->ServiceRequest->primaryKey => $id));
+            $this->request->data = $this->ServiceRequest->find('first', $options);
+        }
+    }
 
     /**
      * delete method
@@ -206,6 +242,19 @@ class ServiceRequestsController extends AppController {
             $this->Session->setFlash(__('The service request could not be deleted. Please, try again.'));
         }
         return $this->redirect(array('action' => 'index'));
+    }
+    
+    public function prioriteti() {
+        $this->autoRender = false;
+        $p = $this->ServiceRequest->Priority->find('list');
+        if ($this->request->is('requested')) {
+            return $p;
+        }
+    }
+    
+    public function zabrani() {
+        
+        $this->Auth->deny();
     }
 
 }

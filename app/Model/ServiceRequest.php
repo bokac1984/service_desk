@@ -103,6 +103,10 @@ class ServiceRequest extends AppModel {
             'className' => 'ServiceRequestsH',
             'foreignKey' => 'service_request_id',
         ),
+        'Message' => array(
+            'className' => 'Message',
+            'foreignKey' => 'service_request_id',
+        )
     );
 
     /**
@@ -205,7 +209,7 @@ class ServiceRequest extends AppModel {
         return parent::afterSave($created, $options);
     }
     
-//    public function isOwnedBy($user) {
+//    public function isOwnedBy($user, $id) {
 //       /* $data = $this->find('first', array(
 //            'conditions' => array(
 //                'ServiceRequest.user_id' => $user['id']
@@ -216,7 +220,7 @@ class ServiceRequest extends AppModel {
 //            )
 //        ));*/
 //        
-//        return $this->field('id', array('user_id' => $user['id'])) !== false;
+//        return $this->field('id', array('user_id' => $user['id'], 'id' => )) !== false;
 //        
 //        parent::isOwnedBy($user);
 //    }

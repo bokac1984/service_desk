@@ -13,6 +13,7 @@
 		echo $this->Html->css('bootstrap.min');
                 echo $this->Html->css('sb-admin-2');
                 echo $this->Html->css('/font-awesome-4.1.0/css/font-awesome.min');
+                echo $this->Html->css('custom');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');

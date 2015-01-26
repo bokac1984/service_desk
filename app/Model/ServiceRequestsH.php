@@ -50,13 +50,28 @@ class ServiceRequestsH extends AppModel {
             'fields' => '',
             'order' => ''
         ),
-        'User' => array(
+        'Editor' => array(
             'className' => 'User',
             'foreignKey' => 'user_id',
             'conditions' => '',
-            'fields' => '',
+            'fields' => 'username',
             'order' => ''
-        )
+        ),
+//        'Solver' => array(
+//            'className' => 'User',
+//            'foreignKey' => 'assigned_to',
+//            'fields' => 'username',
+//        ),
+//        'Status' => array(
+//            'className' => 'Status',
+//            'foreignKey' => 'status_h',
+//            'fields' => 'naziv' 
+//        ),
+//        'Priority' => array(
+//            'className' => 'Priority',
+//            'foreignKey' => 'prioritet',
+//            'fields' => 'name'
+//        )        
     );
     
     public function beforeSave($options = array()) {
@@ -73,6 +88,6 @@ class ServiceRequestsH extends AppModel {
             $this->data['ServiceRequestsH']['sekvenca'] = 1;
         }
         
-        return parent::beforeSave($options);
+        parent::beforeSave($options);
     }
 }

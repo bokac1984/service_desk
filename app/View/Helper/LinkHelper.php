@@ -33,7 +33,7 @@ class LinkHelper extends AppHelper {
      * @return string
      */
     public function dLink($title = '', $url = '/pages/index', $classes = 'fa ', $delId = 0) {
-        return $this->Form->postLink('<i class="'.$classes.'"></i> '.$title, $url, array('escape' => false), __('Are you sure you want to delete # %s?', $delId));
+        return $this->Form->postLink('<i class="'.$classes.'"></i> '.$title, $url, array('escape' => false), __('Da li ste sigurni da brišete # %s?', $delId));
     }
     
     public function displayUrl($url, $name) {
